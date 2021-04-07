@@ -8,7 +8,6 @@ public class ProductsApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ProductsApplication.class, args);
-        // Testing login
     }
 
 }

@@ -21,13 +21,17 @@ public class Product {
 
     @ManyToOne(optional = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "branid", nullable = false)
-    Brand brand;
+    private Brand brand;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cateid", nullable = false)
-    Category category;
+    private Category category;
 
     @OneToMany(mappedBy = "prodid", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    Set<SupermarketProduct> supermarketProducts;
+    private Set<SupermarketProduct> supermarketProducts;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "packid", referencedColumnName = "packid")
+    private Pack pack;
 
 }

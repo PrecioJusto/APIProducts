@@ -15,27 +15,27 @@ import java.util.Objects;
 @Entity(name = "supermarketproduct")
 public class SupermarketProduct {
     @EmbeddedId
-    SuperMarketProductCK id;
+    private SuperMarketProductCK id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("supeid")
-    Supermarket supeid;
+    private Supermarket supeid;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("prodid")
-    Product prodid;
+    private Product prodid;
 
     @ManyToOne(optional = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "offeid", nullable = false)
-    Offer offer;
+    private Offer offer;
 
-    Integer supprice;
+    private Integer supprice;
 
-    LocalDateTime suprlastupdated;
+    private LocalDateTime suprlastupdated;
 
-    String suprimg;
+    private String suprimg;
 
-    Boolean suprstock;
+    private Boolean suprstock;
 
     @Override
     public boolean equals(Object o) {

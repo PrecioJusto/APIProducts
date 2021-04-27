@@ -17,5 +17,5 @@ public class Offer {
     private Long offeid;
 
     @OneToMany(mappedBy = "offer", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    Set<SupermarketProduct> supermarketProducts;
+    private Set<SupermarketProduct> supermarketProducts;
 }

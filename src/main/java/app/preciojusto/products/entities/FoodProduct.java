@@ -9,12 +9,12 @@ import java.util.Set;
 
 @Getter
 @Setter
-@Entity(name = "foodprodcut")
+@Entity(name = "foodproduct")
 public class FoodProduct extends Product {
 
     @ManyToOne(optional = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "contid", nullable = false)
-    Container container;
+    private Container container;
 
     @ManyToMany
     @JoinTable(
@@ -22,5 +22,5 @@ public class FoodProduct extends Product {
             joinColumns = @JoinColumn(name="recid"),
             inverseJoinColumns = @JoinColumn(name = "prodid")
     )
-    Set<Recipe> recipes;
+    private Set<Recipe> recipes;
 }

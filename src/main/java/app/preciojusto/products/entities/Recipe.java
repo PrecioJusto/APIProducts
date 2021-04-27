@@ -31,5 +31,5 @@ public class Recipe {
     private String reciingredients;
 
     @ManyToMany(mappedBy = "recipes")
-    Set<FoodProduct> foodProducts;
+    private Set<FoodProduct> foodProducts;
 }

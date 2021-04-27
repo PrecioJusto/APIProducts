@@ -11,10 +11,10 @@ import java.util.Objects;
 @Setter
 public class SuperMarketProductCK implements Serializable {
     @Column(name="supermarketId")
-    Long supeid;
+    private Long supeid;
 
     @Column(name="productId")
-    Long prodid;
+    private Long prodid;
 
     public SuperMarketProductCK(Long supeid, Long prodid){
         this.supeid = supeid;

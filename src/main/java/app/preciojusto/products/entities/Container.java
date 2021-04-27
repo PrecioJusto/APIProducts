@@ -20,8 +20,8 @@ public class Container {
 
     private String conttype;
 
-    private Integer contcapacity;
+    private Double contcapacity;
 
     @OneToMany(mappedBy = "container", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    Set<FoodProduct> foodProducts;
+    private Set<FoodProduct> foodProducts;
 }

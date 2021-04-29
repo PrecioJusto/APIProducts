@@ -21,7 +21,6 @@ public class Category {
     @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Product> products;
 
-
     @OneToMany(cascade = CascadeType.REMOVE, fetch=FetchType.LAZY)
     private Set<Category> categories;
 }

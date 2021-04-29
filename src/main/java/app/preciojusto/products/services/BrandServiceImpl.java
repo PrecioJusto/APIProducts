@@ -6,22 +6,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BrandServiceImpl implements BrandService{
+public class BrandServiceImpl implements BrandService {
 
     @Autowired
     BrandRepository brandRepository;
 
-    public Brand findById(Long id){
+    @Override
+    public Brand findById(Long id) {
         // Exception handler must be implemented
-        return brandRepository.findById(id).get();
+        return this.brandRepository.findById(id).get();
     }
 
     @Override
     public Brand save(Long id, String name) {
         Brand brand;
-        if (id != null) brand = this.findById(id);
-        else brand = new Brand();
+        if (id != null) {
+            brand = this.findById(id);
+        } else {
+            brand = new Brand();
+        }
         brand.setBranname(name);
-        return brandRepository.save(brand);
+        return this.brandRepository.save(brand);
+    }
+
+    @Override
+    public Brand findByBrannameEquals(String name) {
+        return this.brandRepository.findByBrannameEquals(name);
     }
 }

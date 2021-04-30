@@ -38,10 +38,18 @@ public class DefaultDatabaseInfoController {
     @GetMapping("/addDefaultInfo")
     public Boolean addDefaultInfo() {
         try {
-            this.brandService.save(null, "coca");
+            this.brandService.save(null, "coca cola");
             this.categoryService.save(null, "bebidas", null);
             this.categoryService.save(null, "refrescos", null);
-            // this.categoryService.setAsChildren("refrescos", "bebidas");
+            /* Not working, to be tested
+             this.categoryService.setAsChildren("refrescos", "bebidas");
+             */
+            this.containerService.save(null, "cl", "lata", 33.0);
+            this.packService.save(null, 24);
+            this.supermarketService.save(null, "carrefour");
+            this.productService.save(null, "Coca Cola zero azúcar pack 24 latas 33 cl.", "coca cola",
+                    "refrescos", "carrefour");
+
             return true;
         } catch (Exception e) {
             return false;

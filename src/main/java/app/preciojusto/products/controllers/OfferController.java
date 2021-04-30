@@ -10,12 +10,12 @@ import java.util.List;
 public class OfferController {
 
     @GetMapping("/offer/all")
-    public List<Offer> getOffers(){
+    public List<Offer> getOffers() {
         return null;
     }
 
     @GetMapping("/offer/{id}/get")
-    public Offer getOffer(@PathVariable Long id){
+    public Offer getOffer(@PathVariable Long id) {
         return null;
     }
 

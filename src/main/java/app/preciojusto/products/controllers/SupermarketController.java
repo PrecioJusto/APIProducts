@@ -1,6 +1,5 @@
 package app.preciojusto.products.controllers;
 
-import app.preciojusto.products.entities.Category;
 import app.preciojusto.products.entities.Supermarket;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -11,12 +10,12 @@ import java.util.List;
 public class SupermarketController {
 
     @GetMapping("/supermarket/all")
-    public List<Supermarket> getSupermarkets(){
+    public List<Supermarket> getSupermarkets() {
         return null;
     }
 
     @GetMapping("/supermarket/{id}/get")
-    public Supermarket getSupermarket(@PathVariable Long id){
+    public Supermarket getSupermarket(@PathVariable Long id) {
         return null;
     }
 

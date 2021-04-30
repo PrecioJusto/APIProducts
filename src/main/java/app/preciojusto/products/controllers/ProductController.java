@@ -1,6 +1,5 @@
 package app.preciojusto.products.controllers;
 
-import app.preciojusto.products.entities.Category;
 import app.preciojusto.products.entities.Product;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -8,16 +7,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-public class  ProductController {
+public class ProductController {
 
     @GetMapping("/product/all")
-    public List<Product> getProducts(){
+    public List<Product> getProducts() {
         return null;
     }
 
     @GetMapping("/product/{id}/get")
-    public Product getProduct(@PathVariable Long id){
-      return null;
+    public Product getProduct(@PathVariable Long id) {
+        return null;
     }
 
     @PostMapping("/product/add")

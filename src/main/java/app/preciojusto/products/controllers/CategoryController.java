@@ -1,7 +1,6 @@
 package app.preciojusto.products.controllers;
 
 import app.preciojusto.products.entities.Category;
-import app.preciojusto.products.entities.Product;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,12 +10,12 @@ import java.util.List;
 public class CategoryController {
 
     @GetMapping("/category/all")
-    public List<Category> getCategories(){
+    public List<Category> getCategories() {
         return null;
     }
 
     @GetMapping("/category/{id}/get")
-    public Category getCategory(@PathVariable Long id){
+    public Category getCategory(@PathVariable Long id) {
         return null;
     }
 

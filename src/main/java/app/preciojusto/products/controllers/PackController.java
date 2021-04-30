@@ -9,12 +9,12 @@ import java.util.List;
 @Controller
 public class PackController {
     @GetMapping("/pack/all")
-    public List<Pack> getPacks(){
+    public List<Pack> getPacks() {
         return null;
     }
 
     @GetMapping("/pack/{id}/get")
-    public Pack getPack(@PathVariable Long id){
+    public Pack getPack(@PathVariable Long id) {
         return null;
     }
 

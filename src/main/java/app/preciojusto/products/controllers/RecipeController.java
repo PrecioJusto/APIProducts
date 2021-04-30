@@ -9,12 +9,12 @@ import java.util.List;
 @Controller
 public class RecipeController {
     @GetMapping("/recipe/all")
-    public List<Recipe> getRecipes(){
+    public List<Recipe> getRecipes() {
         return null;
     }
 
     @GetMapping("/recipe/{id}/get")
-    public Recipe getRecipe(@PathVariable Long id){
+    public Recipe getRecipe(@PathVariable Long id) {
         return null;
     }
 

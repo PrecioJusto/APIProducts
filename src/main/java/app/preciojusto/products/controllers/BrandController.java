@@ -10,12 +10,12 @@ import java.util.List;
 public class BrandController {
 
     @GetMapping("/brand/all")
-    public List<Brand> getBrands(){
+    public List<Brand> getBrands() {
         return null;
     }
 
     @GetMapping("/brand/{id}/get")
-    public Brand getBrand(@PathVariable Long id){
+    public Brand getBrand(@PathVariable Long id) {
         return null;
     }
 

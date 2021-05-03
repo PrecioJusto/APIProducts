@@ -26,6 +26,10 @@ public class PackServiceImpl implements PackService {
 
     @Override
     public Pack save(Long id, Integer quantity) {
-        return null;
+        Pack pack;
+        if (id != null) pack = this.findById(id).get();
+        else pack = new Pack();
+        pack.setPackquantity(quantity);
+        return this.packRepository.save(pack);
     }
 }

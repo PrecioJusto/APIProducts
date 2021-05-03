@@ -26,6 +26,6 @@ public class ContainerServiceImpl implements ContainerService {
         c.setContunit(units);
         c.setConttype(type);
         c.setContcapacity(capacity);
-        return c;
+        return this.containerRepository.save(c);
     }
 }

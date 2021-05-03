@@ -30,7 +30,7 @@ public class OfferServiceImpl implements OfferService {
     public Offer save(Long id, Long productId) {
         Offer offer;
         if (id != null) offer = this.findById(id).get();
-        offer = new Offer();
+        else offer = new Offer();
         SupermarketProduct sp = new SupermarketProduct();
         // to implement
         return this.offerRepository.save(offer);

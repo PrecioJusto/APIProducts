@@ -5,6 +5,7 @@ import app.preciojusto.products.repositories.SupermarketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,6 +17,11 @@ public class SupermarketServiceImpl implements SupermarketService {
     @Override
     public Optional<Supermarket> findById(Long id) {
         return this.supermarketRepository.findById(id);
+    }
+
+    @Override
+    public List<Supermarket> findAll() {
+        return this.supermarketRepository.findAll();
     }
 
     @Override

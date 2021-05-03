@@ -2,8 +2,13 @@ package app.preciojusto.products.services;
 
 import app.preciojusto.products.entities.Pack;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface PackService {
-    Pack findById(Long id);
+    Optional<Pack> findById(Long id);
+
+    List<Pack> findAll();
 
     Pack save(Long id, Integer quantity);
 }

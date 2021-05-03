@@ -2,12 +2,11 @@ package app.preciojusto.products.controllers;
 
 import app.preciojusto.products.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-
-@Controller
+@RestController
 public class DefaultDatabaseInfoController {
 
     @Autowired

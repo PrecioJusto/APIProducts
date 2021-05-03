@@ -5,25 +5,24 @@ import app.preciojusto.products.repositories.SupermarketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class SupermarketServiceImpl implements SupermarketService {
 
     @Autowired
-    SupermarketRepository supermarketRepository;
+    private SupermarketRepository supermarketRepository;
 
     @Override
-    public Supermarket findById(Long id) {
-        return this.supermarketRepository.findById(id).get();
+    public Optional<Supermarket> findById(Long id) {
+        return this.supermarketRepository.findById(id);
     }
 
     @Override
     public Supermarket save(Long id, String name) {
         Supermarket supermarket;
-        if (id != null) {
-            supermarket = this.findById(id);
-        } else {
-            supermarket = new Supermarket();
-        }
+        if (id != null) supermarket = this.findById(id).get();
+        else supermarket = new Supermarket();
         supermarket.setSupename(name);
         return supermarket;
     }

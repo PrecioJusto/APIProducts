@@ -1,22 +1,30 @@
 package app.preciojusto.products.controllers;
 
 import app.preciojusto.products.entities.Category;
-import org.springframework.stereotype.Controller;
+import app.preciojusto.products.exceptions.ApplicationExceptionCode;
+import app.preciojusto.products.exceptions.ResourceNotFoundException;
+import app.preciojusto.products.services.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class CategoryController {
 
+    @Autowired
+    private CategoryService categoryService;
+
+    @ResponseBody
     @GetMapping("/category/all")
     public List<Category> getCategories() {
-        return null;
+        return this.categoryService.findAll();
     }
 
+    @ResponseBody
     @GetMapping("/category/{id}/get")
-    public Category getCategory(@PathVariable Long id) {
-        return null;
+    public Category getCategory(@PathVariable Long id) throws ResourceNotFoundException {
+        return this.categoryService.findById(id).orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CATEGORY_NOT_FOUND_ERROR));
     }
 
     @PostMapping("/category/add")

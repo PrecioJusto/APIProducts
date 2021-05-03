@@ -1,6 +1,7 @@
 package app.preciojusto.products.entities;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class SupermarketProductCK implements Serializable {
     @Column(name = "supermarketId")
     private Long supeid;
@@ -23,12 +25,8 @@ public class SupermarketProductCK implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || this.getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
         SupermarketProductCK that = (SupermarketProductCK) o;
         return Objects.equals(this.supeid, that.supeid) && Objects.equals(this.prodid, that.prodid);
     }

@@ -1,22 +1,28 @@
 package app.preciojusto.products.controllers;
 
 import app.preciojusto.products.entities.Offer;
-import org.springframework.stereotype.Controller;
+import app.preciojusto.products.exceptions.ApplicationExceptionCode;
+import app.preciojusto.products.exceptions.ResourceNotFoundException;
+import app.preciojusto.products.services.OfferService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class OfferController {
+
+    @Autowired
+    private OfferService offerService;
 
     @GetMapping("/offer/all")
     public List<Offer> getOffers() {
-        return null;
+        return this.offerService.findAll();
     }
 
     @GetMapping("/offer/{id}/get")
-    public Offer getOffer(@PathVariable Long id) {
-        return null;
+    public Offer getOffer(@PathVariable Long id) throws ResourceNotFoundException {
+        return this.offerService.findById(id).orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.OFFER_NOT_FOUND_ERROR));
     }
 
     @PostMapping("/offer/add")

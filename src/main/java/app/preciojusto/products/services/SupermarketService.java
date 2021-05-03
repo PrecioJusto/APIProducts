@@ -2,8 +2,10 @@ package app.preciojusto.products.services;
 
 import app.preciojusto.products.entities.Supermarket;
 
+import java.util.Optional;
+
 public interface SupermarketService {
-    Supermarket findById(Long id);
+    Optional<Supermarket> findById(Long id);
 
     Supermarket save(Long id, String name);
 

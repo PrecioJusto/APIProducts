@@ -1,22 +1,28 @@
 package app.preciojusto.products.controllers;
 
 import app.preciojusto.products.entities.Product;
-import org.springframework.stereotype.Controller;
+import app.preciojusto.products.exceptions.ApplicationExceptionCode;
+import app.preciojusto.products.exceptions.ResourceNotFoundException;
+import app.preciojusto.products.services.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class ProductController {
+
+    @Autowired
+    private ProductService productService;
 
     @GetMapping("/product/all")
     public List<Product> getProducts() {
-        return null;
+        return this.productService.findAll();
     }
 
     @GetMapping("/product/{id}/get")
-    public Product getProduct(@PathVariable Long id) {
-        return null;
+    public Product getProduct(@PathVariable Long id) throws ResourceNotFoundException {
+        return this.productService.findById(id).orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.PRODUCT_NOT_FOUND_ERROR));
     }
 
     @PostMapping("/product/add")

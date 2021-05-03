@@ -5,15 +5,23 @@ import app.preciojusto.products.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     @Override
-    public Category findById(Long id) {
-        return this.categoryRepository.findById(id).get();
+    public Optional<Category> findById(Long id) {
+        return this.categoryRepository.findById(id);
+    }
+
+    @Override
+    public List<Category> findAll() {
+        return this.categoryRepository.findAll();
     }
 
     /**
@@ -40,15 +48,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category save(Long id, String name, Long childrenId) {
         Category category;
-        if (id != null) {
-            category = this.findById(id);
-        } else {
-            category = new Category();
-        }
+        if (id != null) category = this.findById(id).get();
+        else category = new Category();
         category.setCatename(name);
-        if (childrenId != null) {
-            category.getCategories().add(this.findById(childrenId));
-        }
+        if (childrenId != null) category.getCategories().add(this.findById(childrenId).get());
         return this.categoryRepository.save(category);
     }
 }

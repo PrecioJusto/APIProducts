@@ -1,12 +1,11 @@
 package app.preciojusto.products.controllers;
 
 import app.preciojusto.products.entities.Supermarket;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class SupermarketController {
 
     @GetMapping("/supermarket/all")

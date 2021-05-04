@@ -18,8 +18,8 @@ public class FoodProduct extends Product {
 
     @ManyToMany
     @JoinTable(
-            name="productrecipe",
-            joinColumns = @JoinColumn(name="recid"),
+            name = "productrecipe",
+            joinColumns = @JoinColumn(name = "recid"),
             inverseJoinColumns = @JoinColumn(name = "prodid")
     )
     private Set<Recipe> recipes;

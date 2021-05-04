@@ -38,6 +38,6 @@ public class ProductServiceImp implements ProductService {
         p.setProdname(name);
         p.setCategory(this.categoryService.findByCatenameEquals(categoryName));
         p.setBrand(this.brandService.findByBrannameEquals(brandName));
-        return p;
+        return this.productRepository.save(p);
     }
 }

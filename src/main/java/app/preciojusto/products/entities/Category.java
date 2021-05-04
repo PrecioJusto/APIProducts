@@ -21,6 +21,10 @@ public class Category {
     @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Product> products;
 
-    @OneToMany(cascade = CascadeType.REMOVE, fetch=FetchType.LAZY)
-    private Set<Category> categories;
+    @OneToMany(mappedBy = "cateparent", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    private Set<Category> catechildrens;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cateparent", nullable = true)
+    private Category cateparent;
 }

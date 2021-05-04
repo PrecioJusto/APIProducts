@@ -1,7 +1,6 @@
 package app.preciojusto.products.services;
 
 import app.preciojusto.products.entities.Offer;
-import app.preciojusto.products.entities.OfferPercentage;
 import app.preciojusto.products.entities.SupermarketProduct;
 import app.preciojusto.products.repositories.OfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +16,10 @@ public class OfferServiceImpl implements OfferService {
     private OfferRepository offerRepository;
 
     @Override
-    public Optional<Offer> findById(Long id) {
+    public Optional<Offer> findOfferById(Long id) {
         return this.offerRepository.findById(id);
     }
+    
 
     @Override
     public List<Offer> findAll() {
@@ -29,15 +29,10 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public Offer save(Long id, Long productId) {
         Offer offer;
-        if (id != null) offer = this.findById(id).get();
+        if (id != null) offer = this.findOfferById(id).get();
         else offer = new Offer();
         SupermarketProduct sp = new SupermarketProduct();
         // to implement
         return this.offerRepository.save(offer);
-    }
-
-    @Override
-    public Offer savePercentage(OfferPercentage offerPercentage) {
-        return null;
     }
 }

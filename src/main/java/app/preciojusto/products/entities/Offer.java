@@ -11,6 +11,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Entity(name = "offer")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

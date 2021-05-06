@@ -9,6 +9,6 @@ import java.util.Optional;
 public interface SupermarketProductService {
     Optional<SupermarketProduct> findById(SupermarketProductCK id);
 
-    SupermarketProduct save(SupermarketProductCK id, Integer price, String supermarketName, Long offerId, String img,
+    SupermarketProduct save(Long superId, Long productId, Integer price, Long offerId, String img,
                             Boolean stock, LocalDateTime updated);
 }

@@ -29,7 +29,6 @@ public class CategoryServiceImpl implements CategoryService {
         Category childCategory = this.categoryRepository.findByCatenameEquals(childName);
         Category parentCategory = this.categoryRepository.findByCatenameEquals(parentName);
         childCategory.setCateparent(parentCategory);
-        parentCategory.getCatechildrens().add(childCategory);
         return this.categoryRepository.save(parentCategory);
     }
 

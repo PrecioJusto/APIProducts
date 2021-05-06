@@ -1,5 +1,8 @@
 package app.preciojusto.products.services;
 
+import app.preciojusto.products.entities.Container;
+import app.preciojusto.products.entities.FoodProduct;
+import app.preciojusto.products.entities.Pack;
 import app.preciojusto.products.entities.Product;
 import app.preciojusto.products.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,12 @@ public class ProductServiceImp implements ProductService {
     @Autowired
     private BrandService brandService;
 
+    @Autowired
+    private SupermarketService supermarketService;
+
+    @Autowired
+    private SupermarketProductService supermarketProductService;
+
     @Override
     public Optional<Product> findById(Long id) {
         return this.productRepository.findById(id);
@@ -30,14 +39,19 @@ public class ProductServiceImp implements ProductService {
         return this.productRepository.findAll();
     }
 
+    // To be tested
     @Override
-    public Product save(Long id, String name, String brandName, String categoryName, String supermarketName) {
-        Product p;
-        if (id != null) p = this.findById(id).get();
-        else p = new Product();
+    public Product saveFoodProduct(Long id, String name, String brandName, String categoryName, String supermarketName, Container container, Pack pack) {
+        FoodProduct p;
+        if (id != null) p = (FoodProduct) this.findById(id).get();
+        else p = new FoodProduct();
         p.setProdname(name);
+
         p.setCategory(this.categoryService.findByCatenameEquals(categoryName));
         p.setBrand(this.brandService.findByBrannameEquals(brandName));
+        p.setContainer(container);
+        p.setPack(pack);
+
         return this.productRepository.save(p);
     }
 }

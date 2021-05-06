@@ -17,6 +17,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long prodid;
 
+    @Column(unique = true)
     private String prodname;
 
     @ManyToOne(optional = true, fetch = FetchType.EAGER)
@@ -27,7 +28,7 @@ public class Product {
     @JoinColumn(name = "cateid", nullable = false)
     private Category category;
 
-    @OneToMany(mappedBy = "prodid", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "prodid", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Set<SupermarketProduct> supermarketProducts;
 
     @OneToOne(cascade = CascadeType.ALL)

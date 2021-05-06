@@ -17,6 +17,7 @@ public class Brand {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long branid;
 
+    @Column(unique = true)
     private String branname;
 
     @JsonIgnore

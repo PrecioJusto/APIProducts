@@ -1,5 +1,7 @@
 package app.preciojusto.products.services;
 
+import app.preciojusto.products.entities.Container;
+import app.preciojusto.products.entities.Pack;
 import app.preciojusto.products.entities.Product;
 
 import java.util.List;
@@ -11,6 +13,5 @@ public interface ProductService {
 
     List<Product> findAll();
 
-    // Need to decide how we gonna implement the product types, this base is not considereing it
-    Product save(Long id, String name, String brandName, String categoryName, String supermarketName);
+    Product saveFoodProduct(Long id, String name, String brandName, String categoryName, String supermarketName, Container container, Pack pack);
 }

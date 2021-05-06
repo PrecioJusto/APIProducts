@@ -30,7 +30,7 @@ public class SupermarketServiceImpl implements SupermarketService {
         if (id != null) supermarket = this.findById(id).get();
         else supermarket = new Supermarket();
         supermarket.setSupename(name);
-        return supermarket;
+        return this.supermarketRepository.save(supermarket);
     }
 
     @Override

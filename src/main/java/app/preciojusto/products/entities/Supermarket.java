@@ -15,6 +15,7 @@ public class Supermarket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long supeid;
 
+    @Column(unique = true)
     private String supename;
 
     @OneToMany(mappedBy = "prodid", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)

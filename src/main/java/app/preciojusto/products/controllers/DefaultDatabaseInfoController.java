@@ -4,8 +4,9 @@ import app.preciojusto.products.entities.*;
 import app.preciojusto.products.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDateTime;
 
 @RestController
 public class DefaultDatabaseInfoController {
@@ -37,7 +38,6 @@ public class DefaultDatabaseInfoController {
     @Autowired
     private RecipeService recipeService;
 
-    @ResponseBody
     @GetMapping("/addDefaultInfo")
     public Boolean addDefaultInfo() {
         try {
@@ -54,8 +54,6 @@ public class DefaultDatabaseInfoController {
             Supermarket a = this.supermarketService.save(null, "alcampo");
             Supermarket e = this.supermarketService.save(null, "el corte ingles");
 
-            System.out.println("super id" + s.getSupeid());
-
             this.categoryService.setAsChildren("refrescos", "bebidas");
 
             Offer offer = this.offerService.saveOfferPercentage(null, 20, 3.0);
@@ -66,10 +64,9 @@ public class DefaultDatabaseInfoController {
                     "refrescos", "carrefour", c, p);
 
 
-            /*
             LocalDateTime now = LocalDateTime.now();
             this.supermarketProductService.save(s.getSupeid(), product.getProdid(), 15, offer.getOffeid(), "test", true, now);
-             */
+
             return true;
         } catch (Exception e) {
             e.printStackTrace();

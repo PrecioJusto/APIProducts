@@ -17,15 +17,13 @@ public class SupermarketProduct {
     private SupermarketProductCK id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @MapsId("supeid")
     private Supermarket supeid;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @MapsId("prodid")
     private Product prodid;
 
     @ManyToOne(optional = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "offeid", nullable = false)
+    @JoinColumn(name = "offeid")
     private Offer offer;
 
     private Integer supprice;
@@ -38,12 +36,8 @@ public class SupermarketProduct {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || this.getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
         SupermarketProduct that = (SupermarketProduct) o;
         return Objects.equals(this.id, that.id) && Objects.equals(this.supeid, that.supeid) && Objects.equals(this.prodid, that.prodid) && Objects.equals(this.supprice, that.supprice) && Objects.equals(this.suprlastupdated, that.suprlastupdated) && Objects.equals(this.suprimg, that.suprimg) && Objects.equals(this.suprstock, that.suprstock);
     }

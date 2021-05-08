@@ -26,8 +26,8 @@ public class BrandController {
     }
 
     @PostMapping("/brand/add")
-    public Brand postAddBrand(@RequestBody String payload) {
-        return null;
+    public Brand postAddBrand(@RequestBody Brand request) {
+        return request;
     }
 
     @PutMapping("/brand/{id}/update")

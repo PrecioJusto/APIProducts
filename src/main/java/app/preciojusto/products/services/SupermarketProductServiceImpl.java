@@ -19,6 +19,9 @@ public class SupermarketProductServiceImpl implements SupermarketProductService 
     @Autowired
     private SupermarketRepository supermarketRepository;
 
+    @Autowired
+    private ProductService productService;
+
     @Override
     public Optional<SupermarketProduct> findById(SupermarketProductCK id) {
         return this.supermarketProductRepository.findById(id);
@@ -27,13 +30,17 @@ public class SupermarketProductServiceImpl implements SupermarketProductService 
     @Override
     public SupermarketProduct save(Long superId, Long productId, Integer price, Long offerId,
                                    String img, Boolean stock, LocalDateTime updated) {
+
         SupermarketProduct supermarketProduct = new SupermarketProduct();
         supermarketProduct.setId(new SupermarketProductCK(superId, productId));
         supermarketProduct.setSupprice(price);
         supermarketProduct.setSuprstock(stock);
         supermarketProduct.setSuprimg(img);
         supermarketProduct.setSuprlastupdated(updated);
+        supermarketProduct.setProdid(this.productService.findById(productId).get());
         supermarketProduct.setSupeid(this.supermarketRepository.findById(superId).get());
+
         return this.supermarketProductRepository.save(supermarketProduct);
+
     }
 }

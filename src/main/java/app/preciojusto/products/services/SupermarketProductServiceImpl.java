@@ -33,7 +33,7 @@ public class SupermarketProductServiceImpl implements SupermarketProductService 
 
         SupermarketProduct supermarketProduct = new SupermarketProduct();
         supermarketProduct.setId(new SupermarketProductCK(superId, productId));
-        supermarketProduct.setSupprice(price);
+        supermarketProduct.setSuprprice(price);
         supermarketProduct.setSuprstock(stock);
         supermarketProduct.setSuprimg(img);
         supermarketProduct.setSuprlastupdated(updated);

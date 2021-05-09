@@ -38,11 +38,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category save(Long id, String name) throws Exception {
-        Category category;
-        if (id != null) category = this.findById(id).get();
+    public Category save(Category category) throws Exception {
+        /*if (category.getCateid() != null) category = this.findById(ca).get();
         else category = new Category();
         category.setCatename(name);
-        return this.categoryRepository.save(category);
+        return this.categoryRepository.save(category);*/
+        return null;
     }
 }

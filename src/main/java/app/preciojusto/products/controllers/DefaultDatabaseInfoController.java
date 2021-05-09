@@ -42,10 +42,17 @@ public class DefaultDatabaseInfoController {
     public Boolean addDefaultInfo() {
         try {
 
-            this.brandService.save(null, "coca cola");
+            Brand b = new Brand();
+            b.setBranname("coca");
+            this.brandService.save(b);
 
-            this.categoryService.save(null, "bebidas");
-            this.categoryService.save(null, "refrescos");
+            Category ca1 = new Category();
+            ca1.setCatename("refrescos");
+            Category ca2 = new Category();
+            ca2.setCatename("bebidas");
+            this.categoryService.save(ca1);
+            this.categoryService.save(ca2);
+            
 
             this.containerService.save(null, "cl", "lata", 33.0);
             this.packService.save(null, 24);

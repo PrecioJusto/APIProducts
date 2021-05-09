@@ -11,7 +11,7 @@ public interface CategoryService {
 
     List<Category> findAll();
 
-    Category save(Long id, String name) throws Exception;
+    Category save(Category category) throws Exception;
 
     Category setAsChildren(String childName, String parentName);
 

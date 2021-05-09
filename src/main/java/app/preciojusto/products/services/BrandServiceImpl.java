@@ -1,6 +1,9 @@
 package app.preciojusto.products.services;
 
 import app.preciojusto.products.entities.Brand;
+import app.preciojusto.products.exceptions.ApplicationExceptionCode;
+import app.preciojusto.products.exceptions.ResourceAlreadyExistsException;
+import app.preciojusto.products.exceptions.ResourceNotFoundException;
 import app.preciojusto.products.repositories.BrandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,17 +28,33 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public Brand save(Long id, String name) {
+    public Brand save(Brand request) throws ResourceNotFoundException, ResourceAlreadyExistsException {
         Brand brand;
-        if (id != null) brand = this.findById(id).get();
-        else brand = new Brand();
-
-        brand.setBranname(name);
-        return this.brandRepository.save(brand);
+        if (request.getBranid() != null) {
+            brand = this.findById(request.getBranid())
+                    .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.BRAND_NOT_FOUND_ERROR));
+            brand.setBranname(request.getBranname());
+        } else brand = request;
+        try {
+            return this.brandRepository.save(brand);
+        } catch (Exception e) {
+            throw new ResourceAlreadyExistsException(ApplicationExceptionCode.BRAND_ALREADY_EXISTS_ERROR);
+        }
     }
 
     @Override
     public Brand findByBrannameEquals(String name) {
         return this.brandRepository.findByBrannameEquals(name);
+    }
+
+    @Override
+    public Boolean delete(Long id) throws ResourceNotFoundException {
+        try {
+            this.brandRepository.delete(this.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.BRAND_NOT_FOUND_ERROR)));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

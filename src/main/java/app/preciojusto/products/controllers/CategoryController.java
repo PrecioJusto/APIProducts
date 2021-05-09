@@ -28,7 +28,7 @@ public class CategoryController {
     }
 
     @PostMapping("/category/add")
-    public Category postAddCategory(@RequestBody String request) {
+    public Category postAddCategory(@RequestBody Category request) {
         // return this.categoryService.save();
         return null;
     }

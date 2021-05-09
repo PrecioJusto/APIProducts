@@ -26,7 +26,7 @@ public class SupermarketProduct {
     @JoinColumn(name = "offeid")
     private Offer offer;
 
-    private Integer supprice;
+    private Integer suprprice;
 
     private LocalDateTime suprlastupdated;
 
@@ -39,11 +39,11 @@ public class SupermarketProduct {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         SupermarketProduct that = (SupermarketProduct) o;
-        return Objects.equals(this.id, that.id) && Objects.equals(this.supeid, that.supeid) && Objects.equals(this.prodid, that.prodid) && Objects.equals(this.supprice, that.supprice) && Objects.equals(this.suprlastupdated, that.suprlastupdated) && Objects.equals(this.suprimg, that.suprimg) && Objects.equals(this.suprstock, that.suprstock);
+        return Objects.equals(this.id, that.id) && Objects.equals(this.supeid, that.supeid) && Objects.equals(this.prodid, that.prodid) && Objects.equals(this.suprprice, that.suprprice) && Objects.equals(this.suprlastupdated, that.suprlastupdated) && Objects.equals(this.suprimg, that.suprimg) && Objects.equals(this.suprstock, that.suprstock);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.supeid, this.prodid, this.supprice, this.suprlastupdated, this.suprimg, this.suprstock);
+        return Objects.hash(this.id, this.supeid, this.prodid, this.suprprice, this.suprlastupdated, this.suprimg, this.suprstock);
     }
 }

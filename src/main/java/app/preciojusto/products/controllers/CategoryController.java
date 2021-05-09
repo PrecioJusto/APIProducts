@@ -2,6 +2,7 @@ package app.preciojusto.products.controllers;
 
 import app.preciojusto.products.entities.Category;
 import app.preciojusto.products.exceptions.ApplicationExceptionCode;
+import app.preciojusto.products.exceptions.BadRequestException;
 import app.preciojusto.products.exceptions.ResourceNotFoundException;
 import app.preciojusto.products.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,19 +29,23 @@ public class CategoryController {
     }
 
     @PostMapping("/category/add")
-    public Category postAddCategory(@RequestBody Category request) {
-        // return this.categoryService.save();
-        return null;
+    public Category postAddCategory(@RequestBody Category request) throws Exception {
+        System.out.println(request.getCateid());
+        if (request.getCatename() == null || request.getCateid() != null)
+            throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
+        return this.categoryService.save(request);
     }
 
-    @PutMapping("/category/{id}/update")
-    public Category putUpdateCategory(@PathVariable Long id, @RequestBody String payload) {
-        return null;
+    @PutMapping("/category/update")
+    public Category putUpdateCategory(@RequestBody Category request) throws Exception {
+        if (request.getCatename() == null || request.getCateid() == null)
+            throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
+        return this.categoryService.save(request);
     }
 
     @DeleteMapping("/category/{id}/delete")
-    public Boolean deleteCategory(@RequestBody String payload) {
-        return false;
+    public Boolean deleteCategory(@PathVariable Long id) throws ResourceNotFoundException {
+        return this.categoryService.delete(id);
     }
 
 }

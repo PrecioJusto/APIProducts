@@ -1,6 +1,9 @@
 package app.preciojusto.products.services;
 
 import app.preciojusto.products.entities.Category;
+import app.preciojusto.products.exceptions.ApplicationExceptionCode;
+import app.preciojusto.products.exceptions.ResourceAlreadyExistsException;
+import app.preciojusto.products.exceptions.ResourceNotFoundException;
 import app.preciojusto.products.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,11 +41,28 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category save(Category category) throws Exception {
-        /*if (category.getCateid() != null) category = this.findById(ca).get();
-        else category = new Category();
-        category.setCatename(name);
-        return this.categoryRepository.save(category);*/
-        return null;
+    public Category save(Category request) throws ResourceNotFoundException {
+        Category category;
+        if (request.getCateid() != null) {
+            category = this.findById(request.getCateid())
+                    .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CATEGORY_NOT_FOUND_ERROR));
+            category.setCatename(request.getCatename());
+        } else category = request;
+        try {
+            return this.categoryRepository.save(category);
+        } catch (Exception e) {
+            throw new ResourceAlreadyExistsException(ApplicationExceptionCode.CATEGORY_ALREADY_EXISTS_ERROR);
+        }
+    }
+
+    @Override
+    public Boolean delete(Long id) throws ResourceNotFoundException {
+        try {
+            this.categoryRepository.delete(this.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CATEGORY_NOT_FOUND_ERROR)));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

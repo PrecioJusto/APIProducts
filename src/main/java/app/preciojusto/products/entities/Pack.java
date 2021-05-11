@@ -15,6 +15,7 @@ public class Pack {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long packid;
 
+    @Column(unique = true)
     private Integer packquantity;
 
 }

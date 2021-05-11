@@ -1,5 +1,6 @@
 package app.preciojusto.products.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,8 +17,10 @@ public class Brand {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long branid;
 
+    @Column(unique = true)
     private String branname;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "brand", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Product> products;
 }

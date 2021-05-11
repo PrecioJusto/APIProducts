@@ -16,6 +16,7 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reciid;
 
+    @Column(unique = true)
     private String reciname;
 
     private String recitext;

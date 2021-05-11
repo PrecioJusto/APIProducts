@@ -3,8 +3,9 @@ package app.preciojusto.products.exceptions;
 import lombok.Getter;
 
 public enum ApplicationExceptionCode {
-    UNKNOWN_ERROR(0),
+    UNKNOWN_ERROR(-1),
 
+    NOT_FOUND_ERROR(0),
     PRODUCT_NOT_FOUND_ERROR(1),
     BRAND_NOT_FOUND_ERROR(2),
     CATEGORY_NOT_FOUND_ERROR(3),
@@ -14,6 +15,7 @@ public enum ApplicationExceptionCode {
     SUPERMARKET_NOT_FOUND_ERROR(7),
     CONTAINER_NOT_FOUND_ERROR(8),
 
+    ALREADY_EXISTS_ERROR(100),
     PRODUCT_ALREADY_EXISTS_ERROR(101),
     BRAND_ALREADY_EXISTS_ERROR(102),
     CATEGORY_ALREADY_EXISTS_ERROR(103),
@@ -23,6 +25,7 @@ public enum ApplicationExceptionCode {
     SUPERMARKET_ALREADY_EXISTS_ERROR(107),
     CONTAINER_ALREADY_EXISTS_ERROR(108),
 
+    NO_CONTENT_ERROR(200),
     PRODUCT_NO_CONTENT_ERROR(201),
     BRAND_NO_CONTENT_ERROR(202),
     CATEGORY_NO_CONTENT_ERROR(203),

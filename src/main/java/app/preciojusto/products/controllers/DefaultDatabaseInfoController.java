@@ -64,9 +64,9 @@ public class DefaultDatabaseInfoController {
             p.setPackquantity(24);
             this.packService.save(p);
 
-            Supermarket s = this.supermarketService.save(null, "carrefour");
-            Supermarket a = this.supermarketService.save(null, "alcampo");
-            Supermarket e = this.supermarketService.save(null, "el corte ingles");
+            Supermarket s = new Supermarket();
+            s.setSupename("carrefour");
+            this.supermarketService.save(s);
 
             this.categoryService.setAsChildren("refrescos", "bebidas");
 
@@ -74,7 +74,7 @@ public class DefaultDatabaseInfoController {
 
             Product product = this.productService.saveFoodProduct(null, "Coca Cola zero azúcar pack 24 latas 33 cl.", "coca",
                     "refrescos", "carrefour", c, p);
-            
+
             LocalDateTime now = LocalDateTime.now();
             this.supermarketProductService.save(s.getSupeid(), product.getProdid(), 15, offer.getOffeid(), "test", true, now);
 

@@ -52,10 +52,17 @@ public class DefaultDatabaseInfoController {
             ca2.setCatename("bebidas");
             this.categoryService.save(ca1);
             this.categoryService.save(ca2);
-            
 
-            this.containerService.save(null, "cl", "lata", 33.0);
-            this.packService.save(null, 24);
+
+            Container c = new Container();
+            c.setConttype("lata");
+            c.setContunit("cl");
+            c.setContcapacity(33.0);
+            this.containerService.save(c);
+
+            Pack p = new Pack();
+            p.setPackquantity(24);
+            this.packService.save(p);
 
             Supermarket s = this.supermarketService.save(null, "carrefour");
             Supermarket a = this.supermarketService.save(null, "alcampo");
@@ -65,12 +72,9 @@ public class DefaultDatabaseInfoController {
 
             Offer offer = this.offerService.saveOfferPercentage(null, 20, 3.0);
 
-            Container c = this.containerService.findById(1L).get();
-            Pack p = this.packService.findById(1L).get();
-            Product product = this.productService.saveFoodProduct(null, "Coca Cola zero azúcar pack 24 latas 33 cl.", "coca cola",
+            Product product = this.productService.saveFoodProduct(null, "Coca Cola zero azúcar pack 24 latas 33 cl.", "coca",
                     "refrescos", "carrefour", c, p);
-
-
+            
             LocalDateTime now = LocalDateTime.now();
             this.supermarketProductService.save(s.getSupeid(), product.getProdid(), 15, offer.getOffeid(), "test", true, now);
 

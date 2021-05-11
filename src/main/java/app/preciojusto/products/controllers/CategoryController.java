@@ -30,7 +30,6 @@ public class CategoryController {
 
     @PostMapping("/category/add")
     public Category postAddCategory(@RequestBody Category request) throws Exception {
-        System.out.println(request.getCateid());
         if (request.getCatename() == null || request.getCateid() != null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.categoryService.save(request);

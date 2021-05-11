@@ -2,6 +2,7 @@ package app.preciojusto.products.controllers;
 
 import app.preciojusto.products.entities.Pack;
 import app.preciojusto.products.exceptions.ApplicationExceptionCode;
+import app.preciojusto.products.exceptions.BadRequestException;
 import app.preciojusto.products.exceptions.ResourceNotFoundException;
 import app.preciojusto.products.services.PackService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,17 +27,21 @@ public class PackController {
     }
 
     @PostMapping("/pack/add")
-    public Pack postAddPack(@RequestBody String payload) {
-        return null;
+    public Pack postAddPack(@RequestBody Pack request) throws ResourceNotFoundException {
+        if (request.getPackquantity() == null || request.getPackid() != null)
+            throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
+        return this.packService.save(request);
     }
 
-    @PutMapping("/pack/{id}/update")
-    public Pack putUpdatePack(@PathVariable Long id, @RequestBody String payload) {
-        return null;
+    @PutMapping("/pack/update")
+    public Pack putUpdatePack(@RequestBody Pack request) throws ResourceNotFoundException {
+        if (request.getPackquantity() == null || request.getPackid() == null)
+            throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
+        return this.packService.save(request);
     }
 
     @DeleteMapping("/pack/{id}/delete")
-    public Boolean deletePack(@RequestBody String payload) {
-        return false;
+    public Boolean deletePack(@PathVariable Long id) throws ResourceNotFoundException {
+        return this.packService.delete(id);
     }
 }

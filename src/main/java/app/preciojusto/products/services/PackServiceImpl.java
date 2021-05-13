@@ -28,6 +28,14 @@ public class PackServiceImpl implements PackService {
     }
 
     @Override
+    public Pack findByPackquantity(Integer quantity) {
+        Pack p = this.packRepository.findByPackquantity(quantity);
+        if (p == null) throw new ResourceAlreadyExistsException(ApplicationExceptionCode.PACK_NOT_FOUND_ERROR);
+        else
+            return p;
+    }
+
+    @Override
     public Pack save(Pack request) throws ResourceNotFoundException {
         Pack pack;
         if (request.getPackid() != null) {

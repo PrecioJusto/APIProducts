@@ -1,5 +1,6 @@
 package app.preciojusto.products.controllers;
 
+import app.preciojusto.products.DTOs.FoodproductDTO;
 import app.preciojusto.products.entities.Product;
 import app.preciojusto.products.exceptions.ApplicationExceptionCode;
 import app.preciojusto.products.exceptions.ResourceNotFoundException;
@@ -19,6 +20,12 @@ public class ProductController {
     public List<Product> getProducts() {
         return this.productService.findAll();
     }
+
+    @GetMapping("/foodproduct/all")
+    public List<Product> getFoodProducts() {
+        return this.productService.findAll();
+    }
+
 
     @GetMapping("/product/{id}/get")
     public Product getProduct(@PathVariable Long id) throws ResourceNotFoundException {

@@ -26,7 +26,9 @@ public class ProductController {
     }
 
     @PostMapping("/product/add")
-    public Product postAddProduct(@RequestBody String payload) {
+    public Product postAddProduct(@RequestBody FoodproductDTO request) {
+        if (request.getId() == null || request.getBrandName() == null || request.getSuperName() == null) {
+        }
         return null;
     }
 

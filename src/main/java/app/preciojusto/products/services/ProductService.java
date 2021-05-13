@@ -13,5 +13,7 @@ public interface ProductService {
 
     List<Product> findAll();
 
+    List<Product> findAllFoodproduct();
+
     Product saveFoodProduct(Long id, String name, String brandName, String categoryName, String supermarketName, Container container, Pack pack);
 }

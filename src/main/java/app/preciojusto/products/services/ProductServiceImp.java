@@ -4,6 +4,7 @@ import app.preciojusto.products.entities.Container;
 import app.preciojusto.products.entities.FoodProduct;
 import app.preciojusto.products.entities.Pack;
 import app.preciojusto.products.entities.Product;
+import app.preciojusto.products.repositories.FoodProductRepository;
 import app.preciojusto.products.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ public class ProductServiceImp implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private FoodProductRepository foodProductRepository;
 
     @Autowired
     private CategoryService categoryService;
@@ -37,6 +41,11 @@ public class ProductServiceImp implements ProductService {
     @Override
     public List<Product> findAll() {
         return this.productRepository.findAll();
+    }
+
+    @Override
+    public List<Product> findAllFoodproduct() {
+        return this.foodProductRepository.findAll();
     }
 
     // To be tested

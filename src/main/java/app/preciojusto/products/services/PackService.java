@@ -11,6 +11,8 @@ public interface PackService {
 
     List<Pack> findAll();
 
+    Pack findByPackquantity(Integer quantity);
+
     Pack save(Pack request) throws ResourceNotFoundException;
 
     Boolean delete(Long id) throws ResourceNotFoundException;

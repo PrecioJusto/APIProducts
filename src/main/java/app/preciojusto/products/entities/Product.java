@@ -27,7 +27,7 @@ public class Product {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cateid", nullable = false)
     private Category category;
-
+    
     @OneToMany(mappedBy = "prodid", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Set<SupermarketProduct> supermarketProducts;
 

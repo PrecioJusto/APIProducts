@@ -3,6 +3,7 @@ package app.preciojusto.products.controllers;
 import app.preciojusto.products.DTOs.FoodproductDTO;
 import app.preciojusto.products.entities.Product;
 import app.preciojusto.products.exceptions.ApplicationExceptionCode;
+import app.preciojusto.products.exceptions.BadRequestException;
 import app.preciojusto.products.exceptions.ResourceNotFoundException;
 import app.preciojusto.products.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,32 +22,29 @@ public class ProductController {
         return this.productService.findAll();
     }
 
-    @GetMapping("/foodproduct/all")
-    public List<Product> getFoodProducts() {
-        return this.productService.findAll();
-    }
-
-
     @GetMapping("/product/{id}/get")
     public Product getProduct(@PathVariable Long id) throws ResourceNotFoundException {
-        return this.productService.findById(id).orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.PRODUCT_NOT_FOUND_ERROR));
+        return this.productService.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.PRODUCT_NOT_FOUND_ERROR));
     }
 
-    @PostMapping("/product/add")
-    public Product postAddProduct(@RequestBody FoodproductDTO request) {
-        if (request.getId() == null || request.getBrandName() == null || request.getSuperName() == null) {
-        }
-        return null;
+    @PostMapping("/foodproduct/add")
+    public Product postAddFoodroduct(@RequestBody FoodproductDTO request) throws ResourceNotFoundException {
+        if (request.getId() != null || request.getBrandName() == null || request.getName() == null || request.getCategoryName() == null)
+            throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
+        return this.productService.saveFoodproductDTO(request);
     }
 
-    @PutMapping("/product/{id}/update")
-    public Product putUpdateProduct(@PathVariable Long id, @RequestBody String payload) {
-        return null;
+    @PutMapping("/foodproduct/update")
+    public Product putUpdateProduct(@RequestBody FoodproductDTO request) throws ResourceNotFoundException {
+        if (request.getId() == null || request.getBrandName() == null || request.getName() == null || request.getCategoryName() == null)
+            throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
+        return this.productService.saveFoodproductDTO(request);
     }
 
     @DeleteMapping("/product/{id}/delete")
-    public Boolean deleteProduct(@RequestBody String payload) {
-        return false;
+    public Boolean deleteProduct(@PathVariable Long id) {
+        return this.productService.delete(id);
     }
 
 }

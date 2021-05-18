@@ -1,5 +1,6 @@
 package app.preciojusto.products.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,14 +21,15 @@ public class Product {
     @Column(unique = true)
     private String prodname;
 
-    @ManyToOne(optional = true, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "branid", nullable = false)
     private Brand brand;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "cateid", nullable = false)
     private Category category;
-    
+
+    @JsonIgnore
     @OneToMany(mappedBy = "prodid", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Set<SupermarketProduct> supermarketProducts;
 

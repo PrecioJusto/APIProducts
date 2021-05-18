@@ -1,5 +1,7 @@
 package app.preciojusto.products.controllers;
 
+import app.preciojusto.products.DTOs.FoodproductDTO;
+import app.preciojusto.products.DTOs.SupermarketProductDTO;
 import app.preciojusto.products.entities.*;
 import app.preciojusto.products.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,7 @@ public class DefaultDatabaseInfoController {
     private SupermarketService supermarketService;
 
     @Autowired
-    OfferService offerService;
+    private OfferService offerService;
 
     @Autowired
     private SupermarketProductService supermarketProductService;
@@ -72,11 +74,24 @@ public class DefaultDatabaseInfoController {
 
             Offer offer = this.offerService.saveOfferPercentage(null, 20, 3.0);
 
-            Product product = this.productService.saveFoodProduct(null, "Coca Cola zero azúcar pack 24 latas 33 cl.", "coca",
-                    "refrescos", "carrefour", c, p);
+            FoodproductDTO foodproductDTO = new FoodproductDTO();
+            foodproductDTO.setBrandName("coca");
+            foodproductDTO.setContainerId(1L);
+            foodproductDTO.setName("Coca Cola zero azúcar pack 24 latas 33 cl.");
+            foodproductDTO.setCategoryName("refrescos");
+            foodproductDTO.setPackQuant(24);
+
+            Product finalp = this.productService.saveFoodproductDTO(foodproductDTO);
 
             LocalDateTime now = LocalDateTime.now();
-            this.supermarketProductService.save(s.getSupeid(), product.getProdid(), 15, offer.getOffeid(), "test", true, now);
+            SupermarketProductDTO supermarketProductDTO = new SupermarketProductDTO();
+            supermarketProductDTO.setSuperid(1L);
+            supermarketProductDTO.setStock(true);
+            supermarketProductDTO.setPrice(3);
+            supermarketProductDTO.setProductid(finalp.getProdid());
+            supermarketProductDTO.setOfferid(null);
+
+            this.supermarketProductService.add(supermarketProductDTO);
 
             return true;
         } catch (Exception e) {

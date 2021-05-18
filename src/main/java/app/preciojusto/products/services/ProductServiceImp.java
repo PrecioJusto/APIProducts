@@ -1,9 +1,11 @@
 package app.preciojusto.products.services;
 
-import app.preciojusto.products.entities.Container;
+import app.preciojusto.products.DTOs.FoodproductDTO;
 import app.preciojusto.products.entities.FoodProduct;
-import app.preciojusto.products.entities.Pack;
 import app.preciojusto.products.entities.Product;
+import app.preciojusto.products.exceptions.ApplicationExceptionCode;
+import app.preciojusto.products.exceptions.ResourceAlreadyExistsException;
+import app.preciojusto.products.exceptions.ResourceNotFoundException;
 import app.preciojusto.products.repositories.FoodProductRepository;
 import app.preciojusto.products.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +30,16 @@ public class ProductServiceImp implements ProductService {
     private BrandService brandService;
 
     @Autowired
+    private PackService packService;
+
+    @Autowired
     private SupermarketService supermarketService;
 
     @Autowired
     private SupermarketProductService supermarketProductService;
+
+    @Autowired
+    private ContainerService containerService;
 
     @Override
     public Optional<Product> findById(Long id) {
@@ -44,23 +52,39 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public List<Product> findAllFoodproduct() {
-        return this.foodProductRepository.findAll();
+    public Optional<FoodProduct> findProductByProdid(Long id) {
+        return this.foodProductRepository.findProductByProdid(id);
+    }
+    
+    @Override
+    public Product saveFoodproductDTO(FoodproductDTO request) throws ResourceNotFoundException {
+        FoodProduct foodProduct;
+        if (request.getId() != null) foodProduct = this.foodProductRepository.findProductByProdid(request.getId())
+                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.FOODPRODUCT_NOT_FOUND_ERROR));
+        else
+            foodProduct = new FoodProduct();
+        foodProduct.setProdname(request.getName());
+        foodProduct.setCategory(this.categoryService.findByCatenameEquals(request.getCategoryName()));
+        foodProduct.setBrand(this.brandService.findByBrannameEquals(request.getBrandName()));
+        foodProduct.setPack(this.packService.findByPackquantity(request.getPackQuant()));
+        if (request.getContainerId() != null)
+            foodProduct.setContainer(this.containerService.findById(request.getContainerId())
+                    .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.FOODPRODUCT_NOT_FOUND_ERROR)));
+        try {
+            return this.productRepository.save(foodProduct);
+        } catch (Exception e) {
+            throw new ResourceAlreadyExistsException(ApplicationExceptionCode.FOODPRODUCT_ALREADY_EXISTS_ERROR);
+        }
     }
 
-    // To be tested
     @Override
-    public Product saveFoodProduct(Long id, String name, String brandName, String categoryName, String supermarketName, Container container, Pack pack) {
-        FoodProduct p;
-        if (id != null) p = (FoodProduct) this.findById(id).get();
-        else p = new FoodProduct();
-        p.setProdname(name);
-
-        p.setCategory(this.categoryService.findByCatenameEquals(categoryName));
-        p.setBrand(this.brandService.findByBrannameEquals(brandName));
-        p.setContainer(container);
-        p.setPack(pack);
-
-        return this.productRepository.save(p);
+    public Boolean delete(Long id) {
+        try {
+            this.productRepository.delete(this.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.PRODUCT_NOT_FOUND_ERROR)));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

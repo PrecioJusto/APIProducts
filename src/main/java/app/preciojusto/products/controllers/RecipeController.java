@@ -1,7 +1,9 @@
 package app.preciojusto.products.controllers;
 
+import app.preciojusto.products.DTOs.RecipeDTO;
 import app.preciojusto.products.entities.Recipe;
 import app.preciojusto.products.exceptions.ApplicationExceptionCode;
+import app.preciojusto.products.exceptions.BadRequestException;
 import app.preciojusto.products.exceptions.ResourceNotFoundException;
 import app.preciojusto.products.services.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,17 +28,21 @@ public class RecipeController {
     }
 
     @PostMapping("/recipe/add")
-    public Recipe postAddRecipe(@RequestBody String payload) {
-        return null;
+    public Recipe postAddRecipe(@RequestBody RecipeDTO request) throws ResourceNotFoundException {
+        if (request.getReciid() != null || request.getReciname() == null || request.getRecitext() == null || request.getReciingredients() == null)
+            throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
+        return this.recipeService.save(request);
     }
 
-    @PutMapping("/recipe/{id}/update")
-    public Recipe putUpdateRecipe(@PathVariable Long id, @RequestBody String payload) {
-        return null;
+    @PutMapping("/recipe/update")
+    public Recipe putUpdateRecipe(@RequestBody RecipeDTO request) throws ResourceNotFoundException {
+        if (request.getReciid() == null || request.getReciname() == null || request.getRecitext() == null || request.getReciingredients() == null)
+            throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
+        return this.recipeService.save(request);
     }
 
     @DeleteMapping("/recipe/{id}/delete")
-    public Boolean deleteRecipe(@RequestBody String payload) {
-        return false;
+    public Boolean deleteRecipe(@PathVariable Long id) {
+        return this.recipeService.delete(id);
     }
 }

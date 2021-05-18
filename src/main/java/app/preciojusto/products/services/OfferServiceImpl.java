@@ -40,7 +40,7 @@ public class OfferServiceImpl implements OfferService {
         offer.setOfpepercentage(percentage);
         offer.setOfpepreviousprice(previousPrice);
         // to implement
-        System.out.println(offer.getOfpepercentage());
+        
         return this.offerRepository.save(offer);
     }
 }

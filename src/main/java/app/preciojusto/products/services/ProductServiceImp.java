@@ -42,7 +42,7 @@ public class ProductServiceImp implements ProductService {
     private ContainerService containerService;
 
     @Override
-    public Optional<Product> findById(Long id) {
+    public Optional<Product> findById(final Long id) {
         return this.productRepository.findById(id);
     }
 
@@ -52,38 +52,41 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public Optional<FoodProduct> findProductByProdid(Long id) {
+    public Optional<FoodProduct> findProductByProdid(final Long id) {
         return this.foodProductRepository.findProductByProdid(id);
     }
-    
+
     @Override
-    public Product saveFoodproductDTO(FoodproductDTO request) throws ResourceNotFoundException {
-        FoodProduct foodProduct;
-        if (request.getId() != null) foodProduct = this.foodProductRepository.findProductByProdid(request.getId())
-                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.FOODPRODUCT_NOT_FOUND_ERROR));
-        else
+    public Product saveFoodproductDTO(final FoodproductDTO request) throws ResourceNotFoundException {
+        final FoodProduct foodProduct;
+        if (request.getId() != null) {
+            foodProduct = this.foodProductRepository.findProductByProdid(request.getId())
+                    .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.FOODPRODUCT_NOT_FOUND_ERROR));
+        } else {
             foodProduct = new FoodProduct();
+        }
         foodProduct.setProdname(request.getName());
         foodProduct.setCategory(this.categoryService.findByCatenameEquals(request.getCategoryName()));
         foodProduct.setBrand(this.brandService.findByBrannameEquals(request.getBrandName()));
         foodProduct.setPack(this.packService.findByPackquantity(request.getPackQuant()));
-        if (request.getContainerId() != null)
+        if (request.getContainerId() != null) {
             foodProduct.setContainer(this.containerService.findById(request.getContainerId())
-                    .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.FOODPRODUCT_NOT_FOUND_ERROR)));
+                    .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CONTAINER_NOT_FOUND_ERROR)));
+        }
         try {
             return this.productRepository.save(foodProduct);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new ResourceAlreadyExistsException(ApplicationExceptionCode.FOODPRODUCT_ALREADY_EXISTS_ERROR);
         }
     }
 
     @Override
-    public Boolean delete(Long id) {
+    public Boolean delete(final Long id) {
         try {
             this.productRepository.delete(this.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.PRODUCT_NOT_FOUND_ERROR)));
             return true;
-        } catch (Exception e) {
+        } catch (final Exception e) {
             return false;
         }
     }

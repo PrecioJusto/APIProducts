@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 @Entity(name = "offerunknown")
 public class OfferUnknown extends Offer {
 
+    private String ofunname;
+
     public OfferUnknown() {
     }
 }

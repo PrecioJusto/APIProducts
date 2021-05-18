@@ -42,6 +42,8 @@ public class SupermarketProductServiceImpl implements SupermarketProductService 
 
     @Override
     public SupermarketProduct add(SupermarketProductDTO request) throws ResourceNotFoundException {
+        if (this.findById(new SupermarketProductCK(request.getProductid(), request.getSuperid())).isPresent())
+            throw new ResourceAlreadyExistsException(ApplicationExceptionCode.SUPERMARKETPRODUCT_ALREADY_EXISTS_ERROR);
         SupermarketProduct supermarketProduct = new SupermarketProduct();
         supermarketProduct.setId(new SupermarketProductCK(request.getProductid(), request.getSuperid()));
         supermarketProduct.setSuprstock(request.getStock());
@@ -79,7 +81,6 @@ public class SupermarketProductServiceImpl implements SupermarketProductService 
         supermarketProduct.setSuprprice(request.getPrice());
         LocalDateTime now = LocalDateTime.now();
         supermarketProduct.setSuprlastupdated(now);
-        System.out.println("hola4");
         try {
             return this.supermarketProductRepository.save(supermarketProduct);
         } catch (Exception e) {

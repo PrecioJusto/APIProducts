@@ -1,9 +1,6 @@
 package app.preciojusto.products.services;
 
-import app.preciojusto.products.entities.Offer;
-import app.preciojusto.products.entities.OfferPercentage;
-import app.preciojusto.products.entities.OfferUnit;
-import app.preciojusto.products.entities.OfferUnitPercentage;
+import app.preciojusto.products.entities.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,4 +18,6 @@ public interface OfferService {
     Offer saveOfferUnit(OfferUnit request);
 
     Boolean delete(Long id);
+
+    Offer saveOfferUnknown(OfferUnknown request);
 }

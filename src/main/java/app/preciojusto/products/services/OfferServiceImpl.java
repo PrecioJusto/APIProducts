@@ -1,16 +1,10 @@
 package app.preciojusto.products.services;
 
-import app.preciojusto.products.entities.Offer;
-import app.preciojusto.products.entities.OfferPercentage;
-import app.preciojusto.products.entities.OfferUnit;
-import app.preciojusto.products.entities.OfferUnitPercentage;
+import app.preciojusto.products.entities.*;
 import app.preciojusto.products.exceptions.ApplicationExceptionCode;
 import app.preciojusto.products.exceptions.ResourceAlreadyExistsException;
 import app.preciojusto.products.exceptions.ResourceNotFoundException;
-import app.preciojusto.products.repositories.OfferPercentageRepository;
-import app.preciojusto.products.repositories.OfferRepository;
-import app.preciojusto.products.repositories.OfferUnitPercentageRepository;
-import app.preciojusto.products.repositories.OfferUnitRepository;
+import app.preciojusto.products.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +25,9 @@ public class OfferServiceImpl implements OfferService {
 
     @Autowired
     public OfferUnitPercentageRepository offerUnitPercentageRepository;
+
+    @Autowired
+    public OfferUnknownRepository offerUnknownRepository;
 
 
     @Override
@@ -89,6 +86,21 @@ public class OfferServiceImpl implements OfferService {
             return this.offerRepository.save(offerUnit);
         } catch (Exception e) {
             throw new ResourceAlreadyExistsException(ApplicationExceptionCode.OFFERUNIT_ALREADY_EXISTS_ERROR);
+        }
+    }
+
+    @Override
+    public Offer saveOfferUnknown(OfferUnknown request) {
+        OfferUnknown offerUnknown;
+        if (request.getOffeid() != null) {
+            offerUnknown = this.offerUnknownRepository.findOfferByOffeid(request.getOffeid())
+                    .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.OFFERUNIT_NOT_FOUND_ERROR));
+            offerUnknown.setOfunname(request.getOfunname());
+        } else offerUnknown = request;
+        try {
+            return this.offerRepository.save(offerUnknown);
+        } catch (Exception e) {
+            throw new ResourceAlreadyExistsException(ApplicationExceptionCode.OFFER_ALREADY_EXISTS_ERROR);
         }
     }
 

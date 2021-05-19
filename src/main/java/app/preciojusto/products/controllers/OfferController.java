@@ -1,9 +1,6 @@
 package app.preciojusto.products.controllers;
 
-import app.preciojusto.products.entities.Offer;
-import app.preciojusto.products.entities.OfferPercentage;
-import app.preciojusto.products.entities.OfferUnit;
-import app.preciojusto.products.entities.OfferUnitPercentage;
+import app.preciojusto.products.entities.*;
 import app.preciojusto.products.exceptions.ApplicationExceptionCode;
 import app.preciojusto.products.exceptions.BadRequestException;
 import app.preciojusto.products.exceptions.ResourceNotFoundException;
@@ -50,6 +47,13 @@ public class OfferController {
         return this.offerService.saveOfferUnitPercentage(request);
     }
 
+    @PostMapping("/offerunknown/add")
+    public Offer postAddOfferUnknown(@RequestBody OfferUnknown request) {
+        if (request.getOffeid() != null || request.getOfunname() == null)
+            throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
+        return this.offerService.saveOfferUnknown(request);
+    }
+
     @PutMapping("/offerpercentage/update")
     public Offer putUpdateOfferPercentage(@RequestBody OfferPercentage request) {
         if (request.getOffeid() == null || request.getOfpepercentage() == null || request.getOfpepreviousprice() == null)
@@ -69,6 +73,13 @@ public class OfferController {
         if (request.getOffeid() == null || request.getOfuppercentage() == null || request.getOfupunitaffected() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.offerService.saveOfferUnitPercentage(request);
+    }
+
+    @PutMapping("/offerunknown/update")
+    public Offer putAddOfferUnknown(@RequestBody OfferUnknown request) {
+        if (request.getOffeid() == null || request.getOfunname() == null)
+            throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
+        return this.offerService.saveOfferUnknown(request);
     }
 
     @DeleteMapping("/offer/{id}/delete")

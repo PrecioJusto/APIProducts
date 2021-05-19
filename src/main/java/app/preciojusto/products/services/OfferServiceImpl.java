@@ -94,13 +94,13 @@ public class OfferServiceImpl implements OfferService {
         OfferUnknown offerUnknown;
         if (request.getOffeid() != null) {
             offerUnknown = this.offerUnknownRepository.findOfferByOffeid(request.getOffeid())
-                    .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.OFFERUNIT_NOT_FOUND_ERROR));
+                    .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.OFFERUNKNOWN_NOT_FOUND_ERROR));
             offerUnknown.setOfunname(request.getOfunname());
         } else offerUnknown = request;
         try {
             return this.offerRepository.save(offerUnknown);
         } catch (Exception e) {
-            throw new ResourceAlreadyExistsException(ApplicationExceptionCode.OFFER_ALREADY_EXISTS_ERROR);
+            throw new ResourceAlreadyExistsException(ApplicationExceptionCode.OFFERUNKNOWN_ALREADY_EXISTS_ERROR);
         }
     }
 

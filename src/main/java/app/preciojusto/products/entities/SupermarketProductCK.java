@@ -18,7 +18,7 @@ public class SupermarketProductCK implements Serializable {
     @Column(name = "productId")
     private Long prodid;
 
-    public SupermarketProductCK(Long supeid, Long prodid) {
+    public SupermarketProductCK(Long prodid, Long supeid) {
         this.supeid = supeid;
         this.prodid = prodid;
     }

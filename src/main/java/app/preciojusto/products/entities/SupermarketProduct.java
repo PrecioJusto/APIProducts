@@ -21,7 +21,7 @@ public class SupermarketProduct {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Product prodid;
-
+    
     @ManyToOne(optional = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "offeid")
     private Offer offer;

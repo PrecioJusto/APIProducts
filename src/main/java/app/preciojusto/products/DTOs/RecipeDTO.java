@@ -1,22 +1,17 @@
-package app.preciojusto.products.entities;
+package app.preciojusto.products.DTOs;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.springframework.stereotype.Service;
 
-import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Getter
-@Setter
+@Service
 @NoArgsConstructor
-@Entity(name = "recipe")
-public class Recipe {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class RecipeDTO {
     private Long reciid;
 
-    @Column(unique = true)
     private String reciname;
 
     private String recitext;
@@ -31,6 +26,5 @@ public class Recipe {
 
     private String reciingredients;
 
-    @ManyToMany(mappedBy = "recipes")
-    private Set<FoodProduct> reciproducts;
+    private List<Long> products;
 }

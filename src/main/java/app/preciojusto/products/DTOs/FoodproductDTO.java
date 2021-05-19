@@ -9,7 +9,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class FoodproductDTO {
 
-    private Integer id;
+    private Long id;
 
     private String name;
 
@@ -17,10 +17,7 @@ public class FoodproductDTO {
 
     private String categoryName;
 
-    private String superName;
+    private Long containerId;
 
-    private Integer containerId;
-
-    private Integer packId;
-    
+    private Integer packQuant;
 }

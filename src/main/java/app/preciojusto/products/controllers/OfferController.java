@@ -54,6 +54,13 @@ public class OfferController {
         return this.offerService.saveOfferUnknown(request);
     }
 
+    @PutMapping("/offerunitplainprice/add")
+    public Offer postAddOfferUnitPlainPrice(@RequestBody OfferUnitPlainPrice request) {
+        if (request.getOffeid() != null || request.getOfupprice() == null || request.getOfupunits() == null)
+            throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
+        return this.offerService.saveOfferUnitPlainPrice(request);
+    }
+
     @PutMapping("/offerpercentage/update")
     public Offer putUpdateOfferPercentage(@RequestBody OfferPercentage request) {
         if (request.getOffeid() == null || request.getOfpepercentage() == null || request.getOfpepreviousprice() == null)
@@ -80,6 +87,13 @@ public class OfferController {
         if (request.getOffeid() == null || request.getOfunname() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.offerService.saveOfferUnknown(request);
+    }
+
+    @PutMapping("/offerunitplainprice/update")
+    public Offer putAddOfferUnitPlainPrice(@RequestBody OfferUnitPlainPrice request) {
+        if (request.getOffeid() == null || request.getOfupprice() == null || request.getOfupunits() == null)
+            throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
+        return this.offerService.saveOfferUnitPlainPrice(request);
     }
 
     @DeleteMapping("/offer/{id}/delete")

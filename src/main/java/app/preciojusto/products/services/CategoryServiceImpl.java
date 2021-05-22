@@ -29,14 +29,16 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category setAsChildren(String childName, String parentName) {
-        Category childCategory = this.categoryRepository.findByCatenameEquals(childName);
-        Category parentCategory = this.categoryRepository.findByCatenameEquals(parentName);
+        Category childCategory = this.categoryRepository.findByCatenameEquals(childName)
+                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CATEGORY_NOT_FOUND_ERROR));
+        Category parentCategory = this.categoryRepository.findByCatenameEquals(parentName)
+                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CATEGORY_NOT_FOUND_ERROR));
         childCategory.setCateparent(parentCategory);
         return this.categoryRepository.save(parentCategory);
     }
 
     @Override
-    public Category findByCatenameEquals(String name) {
+    public Optional<Category> findByCatenameEquals(String name) {
         return this.categoryRepository.findByCatenameEquals(name);
     }
 

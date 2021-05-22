@@ -43,7 +43,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public Brand findByBrannameEquals(String name) {
+    public Optional<Brand> findByBrannameEquals(String name) {
         return this.brandRepository.findByBrannameEquals(name);
     }
 

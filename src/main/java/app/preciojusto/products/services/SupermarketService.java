@@ -13,7 +13,7 @@ public interface SupermarketService {
 
     Supermarket save(Supermarket supermarket) throws ResourceNotFoundException;
 
-    Supermarket findBySupenameEquals(String name);
+    Optional<Supermarket> findBySupenameEquals(String name);
 
     Boolean delete(Long id) throws ResourceNotFoundException;
 }

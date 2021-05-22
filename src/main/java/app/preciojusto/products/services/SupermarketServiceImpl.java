@@ -43,7 +43,7 @@ public class SupermarketServiceImpl implements SupermarketService {
     }
 
     @Override
-    public Supermarket findBySupenameEquals(String name) {
+    public Optional<Supermarket> findBySupenameEquals(String name) {
         return this.supermarketRepository.findBySupenameEquals(name);
     }
 

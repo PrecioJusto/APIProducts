@@ -18,17 +18,19 @@ public class OfferServiceImpl implements OfferService {
     private OfferRepository offerRepository;
 
     @Autowired
-    public OfferPercentageRepository offerPercentageRepository;
+    private OfferPercentageRepository offerPercentageRepository;
 
     @Autowired
-    public OfferUnitRepository offerUnitRepository;
+    private OfferUnitRepository offerUnitRepository;
 
     @Autowired
-    public OfferUnitPercentageRepository offerUnitPercentageRepository;
+    private OfferUnitPercentageRepository offerUnitPercentageRepository;
 
     @Autowired
-    public OfferUnknownRepository offerUnknownRepository;
+    private OfferUnknownRepository offerUnknownRepository;
 
+    @Autowired
+    private OfferUnitPlainPriceRepository offerUnitPlainPriceRepository;
 
     @Override
     public Optional<Offer> findOfferById(Long id) {
@@ -101,6 +103,22 @@ public class OfferServiceImpl implements OfferService {
             return this.offerRepository.save(offerUnknown);
         } catch (Exception e) {
             throw new ResourceAlreadyExistsException(ApplicationExceptionCode.OFFERUNKNOWN_ALREADY_EXISTS_ERROR);
+        }
+    }
+
+    @Override
+    public Offer saveOfferUnitPlainPrice(OfferUnitPlainPrice request) {
+        OfferUnitPlainPrice offerUnitPlainPrice;
+        if (request.getOffeid() != null) {
+            offerUnitPlainPrice = this.offerUnitPlainPriceRepository.findOfferByOffeid(request.getOffeid())
+                    .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.OFFERUNITPLAINPRICE_NOT_FOUND_ERROR));
+            offerUnitPlainPrice.setOfupprice(request.getOfupprice());
+            offerUnitPlainPrice.setOfupunits(request.getOfupunits());
+        } else offerUnitPlainPrice = request;
+        try {
+            return this.offerRepository.save(offerUnitPlainPrice);
+        } catch (Exception e) {
+            throw new ResourceAlreadyExistsException(ApplicationExceptionCode.OFFERUNITPLAINPRICE_ALREADY_EXISTS_ERROR);
         }
     }
 

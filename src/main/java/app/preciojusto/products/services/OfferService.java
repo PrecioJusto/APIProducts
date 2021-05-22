@@ -20,4 +20,6 @@ public interface OfferService {
     Boolean delete(Long id);
 
     Offer saveOfferUnknown(OfferUnknown request);
+
+    Offer saveOfferUnitPlainPrice(OfferUnitPlainPrice request);
 }

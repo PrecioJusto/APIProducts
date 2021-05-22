@@ -73,11 +73,13 @@ public class ProductServiceImp implements ProductService {
         if (request.getPackQuant() != null)
             foodProduct.setPack(this.packService.findByPackquantity(request.getPackQuant())
                     .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.PACK_NOT_FOUND_ERROR)));
+        else foodProduct.setPack(null);
 
         if (request.getContainerId() != null)
             foodProduct.setContainer(this.containerService.findById(request.getContainerId())
                     .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CONTAINER_NOT_FOUND_ERROR)));
-
+        else foodProduct.setContainer(null);
+        
         try {
             return this.productRepository.save(foodProduct);
         } catch (Exception e) {

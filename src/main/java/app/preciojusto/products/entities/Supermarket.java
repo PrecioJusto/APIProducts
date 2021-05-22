@@ -20,7 +20,7 @@ public class Supermarket {
     private String supename;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "prodid", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "supeid", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<SupermarketProduct> supermarketProducts;
 
 }

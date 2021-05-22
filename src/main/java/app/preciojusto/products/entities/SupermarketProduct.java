@@ -13,15 +13,20 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity(name = "supermarketproduct")
 public class SupermarketProduct {
+
     @EmbeddedId
     private SupermarketProductCK id;
 
+    @MapsId("supeid")
+    @JoinColumn(name = "supeid")
     @ManyToOne(fetch = FetchType.EAGER)
     private Supermarket supeid;
 
+    @MapsId("prodid")
+    @JoinColumn(name = "prodid")
     @ManyToOne(fetch = FetchType.EAGER)
     private Product prodid;
-    
+
     @ManyToOne(optional = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "offeid")
     private Offer offer;

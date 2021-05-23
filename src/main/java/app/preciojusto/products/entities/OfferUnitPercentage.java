@@ -14,5 +14,5 @@ public class OfferUnitPercentage extends Offer {
 
     private Integer ofupunitaffected;
 
-    private Integer ofuppercentage;
+    private Double ofuppercentage;
 }

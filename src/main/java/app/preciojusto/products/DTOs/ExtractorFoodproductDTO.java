@@ -7,20 +7,20 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class FoodproductDTO {
+public class ExtractorFoodproductDTO {
 
     private Integer id;
 
     private String name;
 
-    private String brandName;
+    private String brand;
 
     private String categoryName;
 
-    private String superName;
+    private String supermarketName;
 
     private Integer containerId;
 
-    private Integer packId;
+    private Integer pack;
     
 }

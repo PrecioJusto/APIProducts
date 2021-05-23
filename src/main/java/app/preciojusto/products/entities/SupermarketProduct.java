@@ -1,5 +1,6 @@
 package app.preciojusto.products.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +23,7 @@ public class SupermarketProduct {
     @ManyToOne(fetch = FetchType.EAGER)
     private Supermarket supeid;
 
+    @JsonIgnore
     @MapsId("prodid")
     @JoinColumn(name = "prodid")
     @ManyToOne(fetch = FetchType.EAGER)

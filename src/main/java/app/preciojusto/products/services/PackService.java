@@ -11,7 +11,7 @@ public interface PackService {
 
     List<Pack> findAll();
 
-    Pack findByPackquantity(Integer quantity);
+    Optional<Pack> findByPackquantity(Integer quantity) throws ResourceNotFoundException;
 
     Pack save(Pack request) throws ResourceNotFoundException;
 

@@ -20,11 +20,11 @@ public class Product {
     @Column(unique = true)
     private String prodname;
 
-    @ManyToOne(optional = true, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "branid", nullable = false)
     private Brand brand;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "cateid", nullable = false)
     private Category category;
     

@@ -16,7 +16,7 @@ public interface CategoryService {
 
     Category setAsChildren(String childName, String parentName);
 
-    Category findByCatenameEquals(String name);
+    Optional<Category> findByCatenameEquals(String name) throws ResourceNotFoundException;
 
     Boolean delete(Long id) throws ResourceNotFoundException;
 }

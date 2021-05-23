@@ -9,10 +9,10 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity(name = "offerunitpercentage")
-public class OfferUnitPercentage extends Offer {
+@Entity(name = "offerunitplainprice")
+public class OfferUnitPlainPrice extends Offer {
 
-    private Integer ofupunitaffected;
+    private Integer ofupunits;
 
-    private Integer ofuppercentage;
+    private Integer ofupprice;
 }

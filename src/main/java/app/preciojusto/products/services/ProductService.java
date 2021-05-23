@@ -1,8 +1,9 @@
 package app.preciojusto.products.services;
 
-import app.preciojusto.products.entities.Container;
-import app.preciojusto.products.entities.Pack;
+import app.preciojusto.products.DTOs.FoodproductDTO;
+import app.preciojusto.products.entities.FoodProduct;
 import app.preciojusto.products.entities.Product;
+import app.preciojusto.products.exceptions.ResourceNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +14,9 @@ public interface ProductService {
 
     List<Product> findAll();
 
-    List<Product> findAllFoodproduct();
+    Optional<FoodProduct> findProductByProdid(Long id);
 
-    Product saveFoodProduct(Long id, String name, String brandName, String categoryName, String supermarketName, Container container, Pack pack);
+    Product saveFoodproductDTO(FoodproductDTO request) throws ResourceNotFoundException;
+
+    Boolean delete(Long id);
 }

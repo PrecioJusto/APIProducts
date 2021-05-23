@@ -14,7 +14,7 @@ public interface BrandService {
 
     Brand save(Brand brand) throws ResourceNotFoundException;
 
-    Brand findByBrannameEquals(String name);
+    Optional<Brand> findByBrannameEquals(String name);
 
     Boolean delete(Long id) throws ResourceNotFoundException;
 }

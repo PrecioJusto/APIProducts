@@ -1,14 +1,21 @@
 package app.preciojusto.products.services;
 
+import app.preciojusto.products.DTOs.SupermarketProductDTO;
 import app.preciojusto.products.entities.SupermarketProduct;
 import app.preciojusto.products.entities.SupermarketProductCK;
+import app.preciojusto.products.exceptions.ResourceNotFoundException;
 
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 public interface SupermarketProductService {
     Optional<SupermarketProduct> findById(SupermarketProductCK id);
 
-    SupermarketProduct save(Long superId, Long productId, Integer price, Long offerId, String img,
-                            Boolean stock, LocalDateTime updated);
+    List<SupermarketProduct> findAll();
+
+    SupermarketProduct add(SupermarketProductDTO request) throws ResourceNotFoundException;
+
+    SupermarketProduct update(SupermarketProductDTO request) throws ResourceNotFoundException;
+
+    Boolean delete(Long productId, Long supermarketId);
 }

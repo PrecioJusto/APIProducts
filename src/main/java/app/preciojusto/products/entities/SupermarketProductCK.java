@@ -5,20 +5,23 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
+
 
 @Getter
 @Setter
 @NoArgsConstructor
+@Embeddable
 public class SupermarketProductCK implements Serializable {
-    @Column(name = "supermarketId")
+    @Column(name = "supeid")
     private Long supeid;
 
-    @Column(name = "productId")
+    @Column(name = "prodid")
     private Long prodid;
 
-    public SupermarketProductCK(Long supeid, Long prodid) {
+    public SupermarketProductCK(Long prodid, Long supeid) {
         this.supeid = supeid;
         this.prodid = prodid;
     }

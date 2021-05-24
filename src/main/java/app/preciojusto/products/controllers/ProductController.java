@@ -22,6 +22,21 @@ public class ProductController {
         return this.productService.findAll();
     }
 
+    @GetMapping("/product/getallfromlist")
+    public List<Product> getAllProductFromList(@RequestBody List<Long> products) throws ResourceNotFoundException {
+        return this.productService.getAllFromIds(products);
+    }
+
+    @GetMapping("/product/{name}/getallfromname")
+    public List<Product> getAllProductFromName(@PathVariable String name) throws ResourceNotFoundException {
+        return this.productService.findAllByProdnameContaining(name);
+    }
+
+    @GetMapping("/product/{catename}/getallfromcatename")
+    public List<Product> getAllProductFromCatename(@PathVariable String catename) throws ResourceNotFoundException {
+        return this.productService.findAllByCategory_Catename(catename);
+    }
+
     @GetMapping("/product/{id}/get")
     public Product getProduct(@PathVariable Long id) throws ResourceNotFoundException {
         return this.productService.findById(id)

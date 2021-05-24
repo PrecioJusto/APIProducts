@@ -8,6 +8,7 @@ import app.preciojusto.products.repositories.ContainerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,6 +20,11 @@ public class ContainerServiceImpl implements ContainerService {
     @Override
     public Optional<Container> findById(Long id) {
         return this.containerRepository.findById(id);
+    }
+
+    @Override
+    public List<Container> findAll() {
+        return this.containerRepository.findAll();
     }
 
     @Override

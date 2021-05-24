@@ -19,4 +19,10 @@ public interface ProductService {
     Product saveFoodproductDTO(FoodproductDTO request) throws ResourceNotFoundException;
 
     Boolean delete(Long id);
+
+    List<Product> getAllFromIds(List<Long> productsId);
+
+    List<Product> findAllByProdnameContaining(String name);
+
+    List<Product> findAllByCategory_Catename(String name);
 }

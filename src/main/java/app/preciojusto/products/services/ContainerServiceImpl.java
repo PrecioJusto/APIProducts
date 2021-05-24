@@ -54,4 +54,9 @@ public class ContainerServiceImpl implements ContainerService {
         }
     }
 
+    @Override
+    public Optional<Container> findContainerByContcapacityAndAndConttypeAndContunit(Double capacity, String type, String units) {
+        return this.containerRepository.findContainerByContcapacityAndAndConttypeAndContunit(capacity, type, units);
+    }
+
 }

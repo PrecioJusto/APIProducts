@@ -14,4 +14,6 @@ public interface ContainerService {
     Container save(Container container) throws ResourceNotFoundException;
 
     Boolean delete(Long id) throws ResourceNotFoundException;
+
+    Optional<Container> findContainerByContcapacityAndAndConttypeAndContunit(Double capacity, String type, String units);
 }

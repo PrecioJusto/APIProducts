@@ -25,4 +25,6 @@ public interface ProductService {
     List<Product> findAllByProdnameContaining(String name);
 
     List<Product> findAllByCategory_Catename(String name);
+
+    Product findProductByIdAndUpdateViews(Long id);
 }

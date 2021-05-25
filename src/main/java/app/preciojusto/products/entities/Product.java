@@ -19,6 +19,8 @@ public class Product {
 
     @Column(unique = true)
     private String prodname;
+    
+    private Long prodviews;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "branid", nullable = false)
@@ -27,7 +29,7 @@ public class Product {
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "cateid", nullable = false)
     private Category category;
-    
+
     @OneToMany(mappedBy = "prodid", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Set<SupermarketProduct> supermarketProducts;
 

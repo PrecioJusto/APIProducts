@@ -39,8 +39,7 @@ public class ProductController {
 
     @GetMapping("/product/{id}/get")
     public Product getProduct(@PathVariable Long id) throws ResourceNotFoundException {
-        return this.productService.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.PRODUCT_NOT_FOUND_ERROR));
+        return this.productService.findProductByIdAndUpdateViews(id);
     }
 
     @PostMapping("/foodproduct/add")

@@ -65,6 +65,7 @@ public class ProductServiceImp implements ProductService {
                     .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.FOODPRODUCT_NOT_FOUND_ERROR));
         } else {
             foodProduct = new FoodProduct();
+            foodProduct.setProdviews(0L);
         }
         foodProduct.setProdname(request.getName());
         foodProduct.setCategory(this.categoryService.findByCatenameEquals(request.getCategoryName())
@@ -121,4 +122,14 @@ public class ProductServiceImp implements ProductService {
     public List<Product> findAllByCategory_Catename(final String name) {
         return this.productRepository.findAllByCategory_Catename(name);
     }
+
+    @Override
+    public Product findProductByIdAndUpdateViews(final Long id) {
+        final Product product = this.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.PRODUCT_NOT_FOUND_ERROR));
+        product.setProdviews(product.getProdviews() + 1);
+        return this.productRepository.save(product);
+    }
+
+
 }

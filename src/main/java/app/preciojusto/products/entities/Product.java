@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
@@ -20,6 +21,11 @@ public class Product {
     @Column(unique = true)
     private String prodname;
 
+    @Column(name = "prodcreatedtime")
+    private LocalDateTime prodcreatedtime = LocalDateTime.now();
+
+    private Long prodviews;
+
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "branid", nullable = false)
     private Brand brand;
@@ -27,7 +33,7 @@ public class Product {
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "cateid", nullable = false)
     private Category category;
-    
+
     @OneToMany(mappedBy = "prodid", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Set<SupermarketProduct> supermarketProducts;
 

@@ -4,20 +4,18 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @RequiredArgsConstructor
 public class ExtractorFoodproductDTO {
 
-    private Long id;
-
     private String name;
-
     private String brand;
-
-    private String categoryName;
-
-    private Long containerId;
-
-    private Integer packQuant;
+    private String category;
+    private List<SupermarketProductsExtractorRequestDTO> supermarketProducts;
+    private ContainerExtractorRequestDTO container;
+    private Integer pack;
+    private String product_type;
 }

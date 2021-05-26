@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 @Entity(name = "offerpercentage")
 public class OfferPercentage extends Offer {
-    
+
     private Double ofpepercentage;
 
     private Integer ofpepreviousprice;

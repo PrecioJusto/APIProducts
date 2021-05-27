@@ -22,7 +22,7 @@ public class ProductController {
         return this.productService.findAll();
     }
 
-    @GetMapping("/product/getallfromlist")
+    @PostMapping("/product/getallfromlist")
     public List<Product> getAllProductFromList(@RequestBody List<Long> products) throws ResourceNotFoundException {
         return this.productService.getAllFromIds(products);
     }

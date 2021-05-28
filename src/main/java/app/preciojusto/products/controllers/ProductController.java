@@ -17,46 +17,46 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/product/all")
+    @GetMapping("/products")
     public List<Product> getProducts() {
         return this.productService.findAll();
     }
 
-    @PostMapping("/product/getallfromlist")
+    @PostMapping("/products/listid")
     public List<Product> getAllProductFromList(@RequestBody List<Long> products) throws ResourceNotFoundException {
         return this.productService.getAllFromIds(products);
     }
 
-    @GetMapping("/product/{name}/getallfromname")
+    @GetMapping("/products/{name}/name")
     public List<Product> getAllProductFromName(@PathVariable String name) throws ResourceNotFoundException {
         return this.productService.findAllByProdnameContaining(name);
     }
 
-    @GetMapping("/product/{catename}/getallfromcatename")
+    @GetMapping("/products/{catename}/catename")
     public List<Product> getAllProductFromCatename(@PathVariable String catename) throws ResourceNotFoundException {
         return this.productService.findAllByCategory_Catename(catename);
     }
 
-    @GetMapping("/product/{id}/get")
+    @GetMapping("/product/{id}")
     public Product getProduct(@PathVariable Long id) throws ResourceNotFoundException {
         return this.productService.findProductByIdAndUpdateViews(id);
     }
 
-    @PostMapping("/foodproduct/add")
+    @PostMapping("/foodproduct")
     public Product postAddFoodroduct(@RequestBody FoodproductDTO request) throws ResourceNotFoundException {
         if (request.getId() != null || request.getBrandName() == null || request.getName() == null || request.getCategoryName() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.productService.saveFoodproductDTO(request);
     }
 
-    @PutMapping("/foodproduct/update")
+    @PutMapping("/foodproduct")
     public Product putUpdateProduct(@RequestBody FoodproductDTO request) throws ResourceNotFoundException {
         if (request.getId() == null || request.getBrandName() == null || request.getName() == null || request.getCategoryName() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.productService.saveFoodproductDTO(request);
     }
 
-    @DeleteMapping("/product/{id}/delete")
+    @DeleteMapping("/product/{id}")
     public Boolean deleteProduct(@PathVariable Long id) {
         return this.productService.delete(id);
     }

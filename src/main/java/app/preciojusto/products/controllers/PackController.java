@@ -16,31 +16,31 @@ public class PackController {
     @Autowired
     private PackService packService;
 
-    @GetMapping("/pack/all")
+    @GetMapping("/pack")
     public List<Pack> getPacks() {
         return this.packService.findAll();
     }
 
-    @GetMapping("/pack/{id}/get")
+    @GetMapping("/pack/{id}")
     public Pack getPack(@PathVariable Long id) throws ResourceNotFoundException {
         return this.packService.findById(id).orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.PACK_NOT_FOUND_ERROR));
     }
 
-    @PostMapping("/pack/add")
+    @PostMapping("/pack")
     public Pack postAddPack(@RequestBody Pack request) throws ResourceNotFoundException {
         if (request.getPackquantity() == null || request.getPackid() != null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.packService.save(request);
     }
 
-    @PutMapping("/pack/update")
+    @PutMapping("/pack")
     public Pack putUpdatePack(@RequestBody Pack request) throws ResourceNotFoundException {
         if (request.getPackquantity() == null || request.getPackid() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.packService.save(request);
     }
 
-    @DeleteMapping("/pack/{id}/delete")
+    @DeleteMapping("/pack/{id}")
     public Boolean deletePack(@PathVariable Long id) throws ResourceNotFoundException {
         return this.packService.delete(id);
     }

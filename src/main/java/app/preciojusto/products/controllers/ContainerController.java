@@ -16,37 +16,37 @@ public class ContainerController {
     @Autowired
     ContainerService containerService;
 
-    @GetMapping("/container/all")
+    @GetMapping("/containers")
     public List<Container> getContainer() {
         return this.containerService.findAll();
     }
 
-    @GetMapping("/container/{id}/get")
+    @GetMapping("/container/{id}")
     public Container getContainer(@PathVariable Long id) throws ResourceNotFoundException {
         return this.containerService.findById(id).orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CONTAINER_NOT_FOUND_ERROR));
     }
 
-    @GetMapping("/container/getbyattr")
+    @GetMapping("/container/byAttr")
     public Container getContainerByAttr(@RequestBody Container request) throws ResourceNotFoundException {
         return this.containerService.findContainerByContcapacityAndAndConttypeAndContunit(request.getContcapacity(), request.getConttype(), request.getContunit())
                 .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CONTAINER_NOT_FOUND_ERROR));
     }
 
-    @PostMapping("/container/add")
+    @PostMapping("/container")
     public Container postAddContainer(@RequestBody Container request) throws ResourceNotFoundException {
         if (request.getContid() != null || request.getConttype() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.containerService.save(request);
     }
 
-    @PutMapping("/container/update")
+    @PutMapping("/container")
     public Container putUpdateContainer(@RequestBody Container request) throws ResourceNotFoundException {
         if (request.getContid() == null || request.getConttype() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.containerService.save(request);
     }
 
-    @DeleteMapping("/container/{id}/delete")
+    @DeleteMapping("/container/{id}")
     public Boolean deleteContainer(@PathVariable Long id) throws ResourceNotFoundException {
         return this.containerService.delete(id);
     }

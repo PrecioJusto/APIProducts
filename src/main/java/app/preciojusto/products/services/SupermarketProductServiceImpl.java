@@ -94,7 +94,6 @@ public class SupermarketProductServiceImpl implements SupermarketProductService 
             this.supermarketProductRepository.delete(this.findById(new SupermarketProductCK(productId, supermarketId))
                     .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.SUPERMARKETPRODUCT_NOT_FOUND_ERROR)));
             return true;
-
         } catch (Exception e) {
             e.printStackTrace();
             return false;

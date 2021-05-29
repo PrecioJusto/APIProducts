@@ -54,7 +54,7 @@ public class OfferController {
         return this.offerService.saveOfferUnknown(request);
     }
 
-    @PutMapping("/offerunitplainprice")
+    @PostMapping("/offerunitplainprice")
     public Offer postAddOfferUnitPlainPrice(@RequestBody OfferUnitPlainPrice request) {
         if (request.getOffeid() != null || request.getOfupprice() == null || request.getOfupunits() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);

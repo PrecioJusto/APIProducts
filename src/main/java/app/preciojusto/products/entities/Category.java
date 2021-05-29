@@ -20,6 +20,9 @@ public class Category {
     @Column(unique = true)
     private String catename;
 
+    @Column
+    private String cateimg;
+
     @JsonIgnore
     @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Product> products;

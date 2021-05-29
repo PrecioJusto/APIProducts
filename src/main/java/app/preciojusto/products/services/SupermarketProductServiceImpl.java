@@ -88,6 +88,26 @@ public class SupermarketProductServiceImpl implements SupermarketProductService 
         }
     }
 
+    public SupermarketProduct saveSupermarketProduct(SupermarketProduct request) {
+        SupermarketProduct supermarketProduct;
+        if (request.getId() != null) {
+            supermarketProduct = this.findById(request.getId())
+                    .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.SUPERMARKETPRODUCT_NOT_FOUND_ERROR));
+            supermarketProduct.setSuprprice(request.getSuprprice());
+            supermarketProduct.setSuprimg(request.getSuprimg());
+            supermarketProduct.setOffer(request.getOffer());
+        } else supermarketProduct = request;
+
+        LocalDateTime now = LocalDateTime.now();
+        supermarketProduct.setSuprlastupdated(now);
+        try {
+            return this.supermarketProductRepository.save(supermarketProduct);
+        } catch (Exception e) {
+            throw new ResourceAlreadyExistsException(ApplicationExceptionCode.SUPERMARKETPRODUCT_ALREADY_EXISTS_ERROR);
+        }
+    }
+
+
     @Override
     public Boolean delete(Long productId, Long supermarketId) {
         try {

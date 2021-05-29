@@ -7,6 +7,7 @@ import app.preciojusto.products.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,43 +47,48 @@ public class FoodProductExtractorImpl implements FoodProductExtractorService {
 
         try {
 
-            //Create product
-            FoodproductDTO foodproductDTO = new FoodproductDTO();
-            Brand b = checkBrandExtract(productRequest);
-            Category c = checkCategoryExtract(productRequest);
-            Pack p = checkPackExtract(productRequest);
-            Container co = checkContainerExtract(productRequest);
-            //co.setConttype("lata");
-            //co.setContunit("cl");
-            //co.setContcapacity(33.0);
 
-            //private String name;
-            //private String brandName;
-            //private String categoryName;
-            //private Long containerId;
-            //private Integer packQuant;
+            //Comprobamos si el producto existe ya en la base de datos
+            List<Product> listProductExists = this.productService.findAllByCategory_Catename(productRequest.getName());
 
-            foodproductDTO.setName(productRequest.getName());
-            foodproductDTO.setBrandName(b.getBranname());
-            foodproductDTO.setCategoryName(c.getCatename());
-            foodproductDTO.setContainerId(null);
+            Product product;
+            if (listProductExists.isEmpty()) {
+                //Create product
+                FoodproductDTO foodproductDTO = new FoodproductDTO();
+                Brand b = checkBrandExtract(productRequest);
+                Category c = checkCategoryExtract(productRequest);
+                Pack p = checkPackExtract(productRequest);
+                Container co = checkContainerExtract(productRequest);
 
-            if (p == null) {
-                foodproductDTO.setPackQuant(null);
+                foodproductDTO.setName(productRequest.getName());
+                foodproductDTO.setBrandName(b.getBranname());
+                foodproductDTO.setCategoryName(c.getCatename());
+
+                if (p == null) {
+                    foodproductDTO.setPackQuant(null);
+                } else {
+                    foodproductDTO.setPackQuant(p.getPackquantity());
+                }
+
+                if (co == null) {
+                    foodproductDTO.setContainerId(null);
+                } else {
+                    foodproductDTO.setContainerId(co.getContid());
+                }
+
+                product = this.productService.saveFoodproductDTO(foodproductDTO);
+
+                if (product == null) return false;
             } else {
-                foodproductDTO.setPackQuant(p.getPackquantity());
+                product = listProductExists.get(0);
             }
 
-            Product productAdded = this.productService.saveFoodproductDTO(foodproductDTO);
-
-            if (productAdded == null) return false;
-
-            FoodProduct foodProduct = this.productService.findProductByProdid(productAdded.getProdid())
+            FoodProduct foodProduct = this.productService.findProductByProdid(product.getProdid())
                     .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.PRODUCT_NOT_FOUND_ERROR));
 
             //Create supermarketproduct
-            List<SupermarketProductDTO> addedSupermarketProducts = checkSupermarketProductExtract(foodProduct, productRequest.getSupermarketProducts());
-            if (addedSupermarketProducts.size() != productRequest.getSupermarketProducts().size())
+            List<SupermarketProduct> registry = checkSupermarketProductExtract(foodProduct, productRequest.getSupermarketProducts());
+            if (registry.size() != productRequest.getSupermarketProducts().size())
                 return null;
 
         } catch (Exception e) {
@@ -184,26 +190,29 @@ public class FoodProductExtractorImpl implements FoodProductExtractorService {
 
     @Override
     public Container checkContainerExtract(ExtractorFoodproductDTO extractor) {
-        String containerType = extractor.getContainer().getContainerType();
 
-        /*
+        if (extractor.getContainer() == null) return null;
+        String containerType = extractor.getContainer().getContainerType();
+        Double containerCapacity = extractor.getContainer().getContainerQuantity();
+        String containerUnit = extractor.getContainer().getContainerUnit();
+
         Container container;
         try {
-            container = this.containerService.findByCatenameEquals(catename)
-                    .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CATEGORY_NOT_FOUND_ERROR));
+            container = this.containerService.findContainerByContcapacityAndAndConttypeAndContunit(containerCapacity, containerType, containerUnit)
+                    .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CONTAINER_NOT_FOUND_ERROR));
         } catch (Exception e) {
-            category = null;
+            container = null;
         }
 
-
-        if (category == null) {
-            Category c = new Category();
-            c.setCatename(catename);
-            category = this.categoryService.save(c);
+        if (container == null) {
+            Container co = new Container();
+            co.setContunit(containerUnit);
+            co.setConttype(containerType);
+            co.setContcapacity(containerCapacity);
+            container = this.containerService.save(co);
         }
-         */
 
-        return null;
+        return container;
     }
 
     @Override
@@ -215,7 +224,6 @@ public class FoodProductExtractorImpl implements FoodProductExtractorService {
         Offer offer;
         switch (offer_type) {
             case "offerpercentage":
-                // code block
                 OfferPercentage offerPercentage = new OfferPercentage();
                 offerPercentage.setOfpepercentage(extractor.getOfpepercentage());
                 offerPercentage.setOfpepreviousprice(extractor.getOfpepreviousprice());
@@ -248,38 +256,34 @@ public class FoodProductExtractorImpl implements FoodProductExtractorService {
     }
 
     @Override
-    public List<SupermarketProductDTO> checkSupermarketProductExtract(FoodProduct foodProduct, List<SupermarketProductsExtractorRequestDTO> extractor) {
+    public List<SupermarketProduct> checkSupermarketProductExtract(FoodProduct foodProduct, List<SupermarketProductsExtractorRequestDTO> extractor) {
 
-        List<SupermarketProductDTO> supermarketProducts = new ArrayList<>();
+        List<SupermarketProduct> registry = new ArrayList<>();
         for (SupermarketProductsExtractorRequestDTO supeprod : extractor) {
 
-            //Sacamos el supermarket
+            //Create/get supermarket
             Supermarket supermarket = this.checkSupermarketExtract(supeprod);
 
-            //Sacamos el offer
+            //Create/get offer
             Offer offer = checkOfferExtract(supeprod.getOffer());
 
-            //Creamos el supermarketproduct
-
-
-            //SupermarketProduct supermarketProduct = new SupermarketProduct();
-            //supermarketProduct.setProdid(foodProduct);
-            //supermarketProduct.setSupeid(supermarket);
-            //supermarketProduct.setSuprimg(supeprod.getImg());
-            //supermarketProduct.setOffer(offer);
-            //supermarketProduct.setSuprlastupdated(LocalDateTime.now());
-            //supermarketProduct.setSuprstock(supeprod.getStock());
-            //supermarketProducts.add(supermarketProduct);
-
-            SupermarketProductDTO supermarketProductDTO = new SupermarketProductDTO();
-            supermarketProductDTO.setProductid(foodProduct.getProdid());
-            supermarketProductDTO.setSuperid(supermarket.getSupeid());
-            supermarketProductDTO.setImg(supeprod.getImg());
-            supermarketProductDTO.setOfferid(offer.getOffeid());
-            supermarketProductDTO.setStock(supeprod.getStock());
-            supermarketProducts.add(supermarketProductDTO);
+            //Create/get supermarketproduct
+            if (this.supermarketProductService.findById(new SupermarketProductCK(foodProduct.getProdid(), supermarket.getSupeid())).isPresent()) {
+                SupermarketProduct supermarketProduct = this.supermarketProductService.findById(new SupermarketProductCK(foodProduct.getProdid(), supermarket.getSupeid())).get();
+                supermarketProduct.setSuprlastupdated(LocalDateTime.now());
+                //this.supermarketProductService.update(supermarketProduct);
+            } else {
+                SupermarketProductDTO supermarketProductDTO = new SupermarketProductDTO();
+                supermarketProductDTO.setProductid(foodProduct.getProdid());
+                supermarketProductDTO.setSuperid(supermarket.getSupeid());
+                supermarketProductDTO.setImg(supeprod.getImg());
+                supermarketProductDTO.setOfferid(offer.getOffeid());
+                supermarketProductDTO.setStock(supeprod.getStock());
+                registry.add(this.supermarketProductService.add(supermarketProductDTO));
+                //supermarketProducts.add(supermarketProductDTO);
+            }
         }
 
-        return supermarketProducts;
+        return registry;
     }
 }

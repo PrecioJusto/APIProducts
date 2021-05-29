@@ -23,7 +23,7 @@ public class DataExtractorController {
     {
         for (ExtractorFoodproductDTO productRequest: request) {
             boolean statusProduct = this.foodProductExtractorService.checkGlobalExtract(productRequest);
-            if (!statusProduct) { failedProducts.add(productRequest); }
+            if (!statusProduct)failedProducts.add(productRequest);
         }
         return failedProducts;
     }

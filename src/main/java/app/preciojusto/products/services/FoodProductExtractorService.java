@@ -21,5 +21,5 @@ public interface FoodProductExtractorService {
     Container checkContainerExtract(ExtractorFoodproductDTO extractor);
     Offer checkOfferExtract(OfferExtractorRequestDTO extractor);
 
-    List<SupermarketProductDTO> checkSupermarketProductExtract(FoodProduct foodProduct, List<SupermarketProductsExtractorRequestDTO> extractor);
+    List<SupermarketProduct> checkSupermarketProductExtract(FoodProduct foodProduct, List<SupermarketProductsExtractorRequestDTO> extractor);
 }

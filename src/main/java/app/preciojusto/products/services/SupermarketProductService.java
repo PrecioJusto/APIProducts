@@ -19,6 +19,5 @@ public interface SupermarketProductService {
 
     Boolean delete(Long productId, Long supermarketId);
 
-    SupermarketProduct saveSupermarketProduct(SupermarketProduct request);
-
+    SupermarketProduct save(SupermarketProduct supermarketProduct);
 }

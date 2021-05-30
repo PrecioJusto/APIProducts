@@ -23,12 +23,14 @@ public class ContainerController {
 
     @GetMapping("/container/{id}")
     public Container getContainer(@PathVariable Long id) throws ResourceNotFoundException {
-        return this.containerService.findById(id).orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CONTAINER_NOT_FOUND_ERROR));
+        return this.containerService.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CONTAINER_NOT_FOUND_ERROR));
     }
 
-    @GetMapping("/container/byAttr")
+    @GetMapping("/container/byattr")
     public Container getContainerByAttr(@RequestBody Container request) throws ResourceNotFoundException {
-        return this.containerService.findContainerByContcapacityAndAndConttypeAndContunit(request.getContcapacity(), request.getConttype(), request.getContunit())
+        return this.containerService.findContainerByContcapacityAndAndConttypeAndContunit(request.getContcapacity(),
+                request.getConttype(), request.getContunit())
                 .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CONTAINER_NOT_FOUND_ERROR));
     }
 

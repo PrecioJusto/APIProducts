@@ -25,7 +25,8 @@ public class CategoryController {
     @ResponseBody
     @GetMapping("/category/{id}")
     public Category getCategory(@PathVariable Long id) throws ResourceNotFoundException {
-        return this.categoryService.findById(id).orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CATEGORY_NOT_FOUND_ERROR));
+        return this.categoryService.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CATEGORY_NOT_FOUND_ERROR));
     }
 
     @PostMapping("/category")

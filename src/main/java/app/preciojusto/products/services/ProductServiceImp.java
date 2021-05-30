@@ -10,6 +10,7 @@ import app.preciojusto.products.repositories.FoodProductRepository;
 import app.preciojusto.products.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +35,6 @@ public class ProductServiceImp implements ProductService {
     private PackService packService;
 
     @Autowired
-    private SupermarketService supermarketService;
-
-    @Autowired
-    private SupermarketProductService supermarketProductService;
-
-    @Autowired
     private ContainerService containerService;
 
     @Override
@@ -57,6 +52,7 @@ public class ProductServiceImp implements ProductService {
         return this.foodProductRepository.findProductByProdid(id);
     }
 
+    @Transactional
     @Override
     public Product saveFoodproductDTO(final FoodproductDTO request) throws ResourceNotFoundException {
         final FoodProduct foodProduct;
@@ -131,5 +127,9 @@ public class ProductServiceImp implements ProductService {
         return this.productRepository.save(product);
     }
 
+    @Override
+    public Optional<Product> findProductByBrand_BrannameAndProdnameOrderByProdname(final String branname, final String prodname) {
+        return this.productRepository.findProductByBrand_BrannameAndProdnameOrderByProdname(branname, prodname);
+    }
 
 }

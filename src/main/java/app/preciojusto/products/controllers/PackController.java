@@ -23,7 +23,8 @@ public class PackController {
 
     @GetMapping("/pack/{id}")
     public Pack getPack(@PathVariable Long id) throws ResourceNotFoundException {
-        return this.packService.findById(id).orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.PACK_NOT_FOUND_ERROR));
+        return this.packService.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.PACK_NOT_FOUND_ERROR));
     }
 
     @PostMapping("/pack")

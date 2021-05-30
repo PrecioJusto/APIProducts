@@ -23,7 +23,8 @@ public class SupermarketController {
 
     @GetMapping("/supermarket/{id}")
     public Supermarket getSupermarket(@PathVariable Long id) throws ResourceNotFoundException {
-        return this.supermarketService.findById(id).orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.SUPERMARKET_NOT_FOUND_ERROR));
+        return this.supermarketService.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.SUPERMARKET_NOT_FOUND_ERROR));
     }
 
     @PostMapping("/supermarket")

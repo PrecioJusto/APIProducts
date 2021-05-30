@@ -9,6 +9,7 @@ import app.preciojusto.products.exceptions.ResourceNotFoundException;
 import app.preciojusto.products.repositories.SupermarketProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -39,7 +40,7 @@ public class SupermarketProductServiceImpl implements SupermarketProductService 
         return this.supermarketProductRepository.findAll();
     }
 
-
+    @Transactional
     @Override
     public SupermarketProduct add(SupermarketProductDTO request) throws ResourceNotFoundException {
         if (this.findById(new SupermarketProductCK(request.getProductid(), request.getSuperid())).isPresent())
@@ -59,7 +60,8 @@ public class SupermarketProductServiceImpl implements SupermarketProductService 
                 () -> {
                     throw new ResourceNotFoundException(ApplicationExceptionCode.SUPERMARKET_NOT_FOUND_ERROR);
                 });
-        this.offerService.findOfferById(request.getOfferid()).ifPresent(supermarketProduct::setOffer);
+        if (request.getOfferid() != null)
+            this.offerService.findOfferById(request.getOfferid()).ifPresent(supermarketProduct::setOffer);
         LocalDateTime now = LocalDateTime.now();
         supermarketProduct.setSuprlastupdated(now);
         try {
@@ -69,6 +71,7 @@ public class SupermarketProductServiceImpl implements SupermarketProductService 
         }
     }
 
+    @Transactional
     @Override
     public SupermarketProduct update(SupermarketProductDTO request) throws ResourceNotFoundException {
         SupermarketProduct supermarketProduct = this.findById(new SupermarketProductCK(request.getProductid(), request.getSuperid()))
@@ -88,25 +91,10 @@ public class SupermarketProductServiceImpl implements SupermarketProductService 
         }
     }
 
-    public SupermarketProduct saveSupermarketProduct(SupermarketProduct request) {
-        SupermarketProduct supermarketProduct;
-        if (request.getId() != null) {
-            supermarketProduct = this.findById(request.getId())
-                    .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.SUPERMARKETPRODUCT_NOT_FOUND_ERROR));
-            supermarketProduct.setSuprprice(request.getSuprprice());
-            supermarketProduct.setSuprimg(request.getSuprimg());
-            supermarketProduct.setOffer(request.getOffer());
-        } else supermarketProduct = request;
-
-        LocalDateTime now = LocalDateTime.now();
-        supermarketProduct.setSuprlastupdated(now);
-        try {
-            return this.supermarketProductRepository.save(supermarketProduct);
-        } catch (Exception e) {
-            throw new ResourceAlreadyExistsException(ApplicationExceptionCode.SUPERMARKETPRODUCT_ALREADY_EXISTS_ERROR);
-        }
+    @Override
+    public SupermarketProduct save(SupermarketProduct supermarketProduct) {
+        return this.supermarketProductRepository.save(supermarketProduct);
     }
-
 
     @Override
     public Boolean delete(Long productId, Long supermarketId) {
@@ -119,4 +107,5 @@ public class SupermarketProductServiceImpl implements SupermarketProductService 
             return false;
         }
     }
+
 }

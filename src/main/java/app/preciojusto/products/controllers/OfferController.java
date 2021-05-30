@@ -23,7 +23,8 @@ public class OfferController {
 
     @GetMapping("/offer/{id}/")
     public Offer getOffer(@PathVariable Long id) throws ResourceNotFoundException {
-        return this.offerService.findOfferById(id).orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.OFFER_NOT_FOUND_ERROR));
+        return this.offerService.findOfferById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.OFFER_NOT_FOUND_ERROR));
     }
 
     @PostMapping("/offerpercentage")

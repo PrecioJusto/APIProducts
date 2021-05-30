@@ -27,4 +27,6 @@ public interface ProductService {
     List<Product> findAllByCategory_Catename(String name);
 
     Product findProductByIdAndUpdateViews(Long id);
+
+    Optional<Product> findProductByBrand_BrannameAndProdnameOrderByProdname(String branname, String prodname);
 }

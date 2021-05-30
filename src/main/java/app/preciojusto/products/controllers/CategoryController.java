@@ -25,12 +25,13 @@ public class CategoryController {
     @ResponseBody
     @GetMapping("/category/{id}")
     public Category getCategory(@PathVariable Long id) throws ResourceNotFoundException {
-        return this.categoryService.findById(id).orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CATEGORY_NOT_FOUND_ERROR));
+        return this.categoryService.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CATEGORY_NOT_FOUND_ERROR));
     }
 
     @PostMapping("/category")
     public Category postAddCategory(@RequestBody Category request) throws Exception {
-        if (request.getCatename() == null || request.getCateid() != null)
+        if (request.getCatename() == null || request.getCateid() != null || request.getCateimg() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.categoryService.save(request);
     }

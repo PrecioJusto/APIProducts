@@ -23,7 +23,8 @@ public class BrandController {
 
     @GetMapping("/brand/{id}")
     public Brand getBrand(@PathVariable Long id) throws ResourceNotFoundException {
-        return this.brandService.findById(id).orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.BRAND_NOT_FOUND_ERROR));
+        return this.brandService.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.BRAND_NOT_FOUND_ERROR));
     }
 
     @PostMapping("/brand")

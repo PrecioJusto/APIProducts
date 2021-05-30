@@ -49,6 +49,7 @@ public class CategoryServiceImpl implements CategoryService {
             category = this.findById(request.getCateid())
                     .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CATEGORY_NOT_FOUND_ERROR));
             category.setCatename(request.getCatename());
+            category.setCateimg(request.getCateimg());
         } else category = request;
         try {
             return this.categoryRepository.save(category);

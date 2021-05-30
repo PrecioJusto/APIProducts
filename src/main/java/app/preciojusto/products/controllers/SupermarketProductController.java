@@ -28,7 +28,8 @@ public class SupermarketProductController {
     @GetMapping("/supermarketproduct/{productId}/{supermarketId}")
     public SupermarketProduct getSupermarketproduct(@PathVariable Long productId, @PathVariable Long supermarketId) throws ResourceNotFoundException {
         SupermarketProductCK supermarketProductCK = new SupermarketProductCK(productId, supermarketId);
-        return this.supermarketProductService.findById(supermarketProductCK).orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.SUPERMARKETPRODUCT_NOT_FOUND_ERROR));
+        return this.supermarketProductService.findById(supermarketProductCK)
+                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.SUPERMARKETPRODUCT_NOT_FOUND_ERROR));
     }
 
     @PostMapping("/supermarketproduct")

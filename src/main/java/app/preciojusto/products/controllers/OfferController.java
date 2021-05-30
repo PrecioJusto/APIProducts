@@ -23,7 +23,8 @@ public class OfferController {
 
     @GetMapping("/offer/{id}/")
     public Offer getOffer(@PathVariable Long id) throws ResourceNotFoundException {
-        return this.offerService.findOfferById(id).orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.OFFER_NOT_FOUND_ERROR));
+        return this.offerService.findOfferById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.OFFER_NOT_FOUND_ERROR));
     }
 
     @PostMapping("/offerpercentage")
@@ -54,7 +55,7 @@ public class OfferController {
         return this.offerService.saveOfferUnknown(request);
     }
 
-    @PutMapping("/offerunitplainprice")
+    @PostMapping("/offerunitplainprice")
     public Offer postAddOfferUnitPlainPrice(@RequestBody OfferUnitPlainPrice request) {
         if (request.getOffeid() != null || request.getOfupprice() == null || request.getOfupunits() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);

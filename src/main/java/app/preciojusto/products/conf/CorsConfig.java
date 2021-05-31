@@ -17,9 +17,17 @@ public class CorsConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
+
+        //All application
         registry.addMapping("/**")
-                .allowCredentials(true)
                 .allowedOrigins(environment.getProperty("cors.allowed"))
+                //.allowedOrigins("http://domain.com:","http://domain2.com", "http://domain3.com")
                 .allowedMethods("PUT", "POST", "GET", "DELETE", "OPTIONS");
+
+        //Extractor product
+        registry.addMapping("/extractor/product")
+                .allowedOrigins(environment.getProperty("cors.allowed"))
+                //.allowedOrigins("http://domain.com:","http://domain2.com", "http://domain3.com")
+                .allowedMethods("POST", "OPTIONS");
     }
 }

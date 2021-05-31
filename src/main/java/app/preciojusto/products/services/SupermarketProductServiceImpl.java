@@ -10,6 +10,7 @@ import app.preciojusto.products.repositories.SupermarketProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +40,7 @@ public class SupermarketProductServiceImpl implements SupermarketProductService 
         return this.supermarketProductRepository.findAll();
     }
 
-
+    @Transactional
     @Override
     public SupermarketProduct add(SupermarketProductDTO request) throws ResourceNotFoundException {
         if (this.findById(new SupermarketProductCK(request.getProductid(), request.getSuperid())).isPresent())
@@ -59,7 +60,8 @@ public class SupermarketProductServiceImpl implements SupermarketProductService 
                 () -> {
                     throw new ResourceNotFoundException(ApplicationExceptionCode.SUPERMARKET_NOT_FOUND_ERROR);
                 });
-        this.offerService.findOfferById(request.getOfferid()).ifPresent(supermarketProduct::setOffer);
+        if (request.getOfferid() != null)
+            this.offerService.findOfferById(request.getOfferid()).ifPresent(supermarketProduct::setOffer);
         LocalDateTime now = LocalDateTime.now();
         supermarketProduct.setSuprlastupdated(now);
         try {
@@ -69,6 +71,7 @@ public class SupermarketProductServiceImpl implements SupermarketProductService 
         }
     }
 
+    @Transactional
     @Override
     public SupermarketProduct update(SupermarketProductDTO request) throws ResourceNotFoundException {
         SupermarketProduct supermarketProduct = this.findById(new SupermarketProductCK(request.getProductid(), request.getSuperid()))
@@ -89,12 +92,16 @@ public class SupermarketProductServiceImpl implements SupermarketProductService 
     }
 
     @Override
+    public SupermarketProduct save(SupermarketProduct supermarketProduct) {
+        return this.supermarketProductRepository.save(supermarketProduct);
+    }
+
+    @Override
     public Boolean delete(Long productId, Long supermarketId) {
         try {
             this.supermarketProductRepository.delete(this.findById(new SupermarketProductCK(productId, supermarketId))
                     .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.SUPERMARKETPRODUCT_NOT_FOUND_ERROR)));
             return true;
-
         } catch (Exception e) {
             e.printStackTrace();
             return false;

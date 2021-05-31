@@ -131,5 +131,8 @@ public class ProductServiceImp implements ProductService {
         return this.productRepository.save(product);
     }
 
-
+    @Override
+    public Optional<Product> findProductByBrand_BrannameAndProdnameOrderByProdname(String branname, String prodname) {
+        return this.productRepository.findProductByBrand_BrannameAndProdnameOrderByProdname(branname, prodname);
+    }
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FoodProductExtractorImpl implements FoodProductExtractorService {
@@ -49,10 +50,11 @@ public class FoodProductExtractorImpl implements FoodProductExtractorService {
 
 
             //Comprobamos si el producto existe ya en la base de datos
-            List<Product> listProductExists = this.productService.findAllByCategory_Catename(productRequest.getName());
+            //List<Product> listProductExists = this.productService.findAllByProdnameContaining(productRequest.getName());
+            Optional<Product> productExists = this.productService.findProductByBrand_BrannameAndProdnameOrderByProdname(productRequest.getBrand(), productRequest.getName());
 
             Product product;
-            if (listProductExists.isEmpty()) {
+            if (productExists.isEmpty()) {
                 //Create product
                 FoodproductDTO foodproductDTO = new FoodproductDTO();
                 Brand b = checkBrandExtract(productRequest);
@@ -80,7 +82,7 @@ public class FoodProductExtractorImpl implements FoodProductExtractorService {
 
                 if (product == null) return false;
             } else {
-                product = listProductExists.get(0);
+                product = productExists.get();
             }
 
             FoodProduct foodProduct = this.productService.findProductByProdid(product.getProdid())
@@ -89,7 +91,7 @@ public class FoodProductExtractorImpl implements FoodProductExtractorService {
             //Create supermarketproduct
             List<SupermarketProduct> registry = checkSupermarketProductExtract(foodProduct, productRequest.getSupermarketProducts());
             if (registry.size() != productRequest.getSupermarketProducts().size())
-                return null;
+                return false;
 
         } catch (Exception e) {
             return false;
@@ -218,11 +220,11 @@ public class FoodProductExtractorImpl implements FoodProductExtractorService {
     @Override
     public Offer checkOfferExtract(OfferExtractorRequestDTO extractor) {
 
-        String offer_type = extractor.getOffer_type();
-        if (offer_type == null) return null;
+        //Si no hay oferta, devolveremos null
+        if (extractor == null || extractor.getOffer_type() == null) return null;
 
         Offer offer;
-        switch (offer_type) {
+        switch (extractor.getOffer_type()) {
             case "offerpercentage":
                 OfferPercentage offerPercentage = new OfferPercentage();
                 offerPercentage.setOfpepercentage(extractor.getOfpepercentage());
@@ -270,17 +272,24 @@ public class FoodProductExtractorImpl implements FoodProductExtractorService {
             //Create/get supermarketproduct
             if (this.supermarketProductService.findById(new SupermarketProductCK(foodProduct.getProdid(), supermarket.getSupeid())).isPresent()) {
                 SupermarketProduct supermarketProduct = this.supermarketProductService.findById(new SupermarketProductCK(foodProduct.getProdid(), supermarket.getSupeid())).get();
+
+                supermarketProduct.setOffer(offer);
+                supermarketProduct.setSuprprice(supeprod.getPrice());
                 supermarketProduct.setSuprlastupdated(LocalDateTime.now());
-                //this.supermarketProductService.update(supermarketProduct);
+                supermarketProduct.setSuprimg(supeprod.getImg());
+                supermarketProduct.setSuprstock(supeprod.getStock());
+                registry.add(this.supermarketProductService.save(supermarketProduct));
+
             } else {
                 SupermarketProductDTO supermarketProductDTO = new SupermarketProductDTO();
                 supermarketProductDTO.setProductid(foodProduct.getProdid());
                 supermarketProductDTO.setSuperid(supermarket.getSupeid());
                 supermarketProductDTO.setImg(supeprod.getImg());
-                supermarketProductDTO.setOfferid(offer.getOffeid());
+                if (offer != null) {
+                    supermarketProductDTO.setOfferid(offer.getOffeid());
+                }
                 supermarketProductDTO.setStock(supeprod.getStock());
                 registry.add(this.supermarketProductService.add(supermarketProductDTO));
-                //supermarketProducts.add(supermarketProductDTO);
             }
         }
 

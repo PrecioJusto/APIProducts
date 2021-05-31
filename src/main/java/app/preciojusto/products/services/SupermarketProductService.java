@@ -18,4 +18,6 @@ public interface SupermarketProductService {
     SupermarketProduct update(SupermarketProductDTO request) throws ResourceNotFoundException;
 
     Boolean delete(Long productId, Long supermarketId);
+
+    SupermarketProduct save(SupermarketProduct supermarketProduct);
 }

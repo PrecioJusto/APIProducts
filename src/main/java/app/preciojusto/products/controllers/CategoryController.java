@@ -17,32 +17,33 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @ResponseBody
-    @GetMapping("/category/all")
+    @GetMapping("/categories")
     public List<Category> getCategories() {
         return this.categoryService.findAll();
     }
 
     @ResponseBody
-    @GetMapping("/category/{id}/get")
+    @GetMapping("/category/{id}")
     public Category getCategory(@PathVariable Long id) throws ResourceNotFoundException {
-        return this.categoryService.findById(id).orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CATEGORY_NOT_FOUND_ERROR));
+        return this.categoryService.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CATEGORY_NOT_FOUND_ERROR));
     }
 
-    @PostMapping("/category/add")
+    @PostMapping("/category")
     public Category postAddCategory(@RequestBody Category request) throws Exception {
-        if (request.getCatename() == null || request.getCateid() != null)
+        if (request.getCatename() == null || request.getCateid() != null || request.getCateimg() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.categoryService.save(request);
     }
 
-    @PutMapping("/category/update")
+    @PutMapping("/category")
     public Category putUpdateCategory(@RequestBody Category request) throws Exception {
         if (request.getCatename() == null || request.getCateid() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.categoryService.save(request);
     }
 
-    @DeleteMapping("/category/{id}/delete")
+    @DeleteMapping("/category/{id}")
     public Boolean deleteCategory(@PathVariable Long id) throws ResourceNotFoundException {
         return this.categoryService.delete(id);
     }

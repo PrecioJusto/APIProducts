@@ -16,31 +16,32 @@ public class SupermarketController {
     @Autowired
     private SupermarketService supermarketService;
 
-    @GetMapping("/supermarket/all")
+    @GetMapping("/supermarket")
     public List<Supermarket> getSupermarkets() {
         return this.supermarketService.findAll();
     }
 
-    @GetMapping("/supermarket/{id}/get")
+    @GetMapping("/supermarket/{id}")
     public Supermarket getSupermarket(@PathVariable Long id) throws ResourceNotFoundException {
-        return this.supermarketService.findById(id).orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.SUPERMARKET_NOT_FOUND_ERROR));
+        return this.supermarketService.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.SUPERMARKET_NOT_FOUND_ERROR));
     }
 
-    @PostMapping("/supermarket/add")
+    @PostMapping("/supermarket")
     public Supermarket postAddSupermarket(@RequestBody Supermarket request) throws ResourceNotFoundException {
         if (request.getSupename() == null || request.getSupeid() != null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.supermarketService.save(request);
     }
 
-    @PutMapping("/supermarket/update")
+    @PutMapping("/supermarket")
     public Supermarket putUpdateSupermarket(@RequestBody Supermarket request) throws ResourceNotFoundException {
         if (request.getSupename() == null || request.getSupeid() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.supermarketService.save(request);
     }
 
-    @DeleteMapping("/supermarket/{id}/delete")
+    @DeleteMapping("/supermarket/{id}")
     public Boolean deleteSupermarket(@PathVariable Long id) throws ResourceNotFoundException {
         return this.supermarketService.delete(id);
     }

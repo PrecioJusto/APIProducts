@@ -9,6 +9,7 @@ import app.preciojusto.products.exceptions.ResourceNotFoundException;
 import app.preciojusto.products.repositories.SupermarketProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -107,4 +108,5 @@ public class SupermarketProductServiceImpl implements SupermarketProductService 
             return false;
         }
     }
+
 }

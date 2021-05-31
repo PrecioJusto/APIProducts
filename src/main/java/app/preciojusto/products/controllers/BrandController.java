@@ -16,31 +16,32 @@ public class BrandController {
     @Autowired
     private BrandService brandService;
 
-    @GetMapping("/brand/all")
+    @GetMapping("/brands")
     public List<Brand> getBrands() {
         return this.brandService.findAll();
     }
 
-    @GetMapping("/brand/{id}/get")
+    @GetMapping("/brand/{id}")
     public Brand getBrand(@PathVariable Long id) throws ResourceNotFoundException {
-        return this.brandService.findById(id).orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.BRAND_NOT_FOUND_ERROR));
+        return this.brandService.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.BRAND_NOT_FOUND_ERROR));
     }
 
-    @PostMapping("/brand/add")
+    @PostMapping("/brand")
     public Brand postAddBrand(@RequestBody Brand request) throws ResourceNotFoundException {
         if (request.getBranname() == null || request.getBranid() != null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.brandService.save(request);
     }
 
-    @PutMapping("/brand/update")
+    @PutMapping("/brand")
     public Brand putUpdateBrand(@RequestBody Brand request) throws ResourceNotFoundException {
         if (request.getBranname() == null || request.getBranid() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.brandService.save(request);
     }
 
-    @DeleteMapping("/brand/{id}/delete")
+    @DeleteMapping("/brand/{id}")
     public Boolean deleteBrand(@PathVariable Long id) throws ResourceNotFoundException {
         return this.brandService.delete(id);
     }

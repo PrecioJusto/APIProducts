@@ -29,5 +29,4 @@ public interface ProductService {
     Product findProductByIdAndUpdateViews(Long id);
 
     Optional<Product> findProductByBrand_BrannameAndProdnameOrderByProdname(String branname, String prodname);
-
 }

@@ -50,7 +50,6 @@ public class FoodProductExtractorImpl implements FoodProductExtractorService {
 
 
             //Comprobamos si el producto existe ya en la base de datos
-            //List<Product> listProductExists = this.productService.findAllByProdnameContaining(productRequest.getName());
             Optional<Product> productExists = this.productService.findProductByBrand_BrannameAndProdnameOrderByProdname(productRequest.getBrand(), productRequest.getName());
 
             Product product;

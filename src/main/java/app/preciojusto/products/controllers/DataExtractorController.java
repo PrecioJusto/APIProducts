@@ -19,13 +19,11 @@ public class DataExtractorController {
     private final List<ExtractorFoodproductDTO> failedProducts = new LinkedList<>();
 
     @PostMapping("/extractor/product")
-    public List<ExtractorFoodproductDTO> extractProductsFoodProducts(@RequestBody List<ExtractorFoodproductDTO> request)
-    {
-        for (ExtractorFoodproductDTO productRequest: request) {
-            System.out.println(productRequest.getName());
+    public List<ExtractorFoodproductDTO> extractProductsFoodProducts(@RequestBody List<ExtractorFoodproductDTO> request) {
+        for (ExtractorFoodproductDTO productRequest : request) {
             boolean statusProduct = this.foodProductExtractorService.checkGlobalExtract(productRequest);
-            if (!statusProduct)failedProducts.add(productRequest);
+            if (!statusProduct) this.failedProducts.add(productRequest);
         }
-        return failedProducts;
+        return this.failedProducts;
     }
 }

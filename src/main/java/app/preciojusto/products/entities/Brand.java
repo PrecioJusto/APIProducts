@@ -21,6 +21,6 @@ public class Brand {
     private String branname;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "brand", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "brand", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Product> products;
 }

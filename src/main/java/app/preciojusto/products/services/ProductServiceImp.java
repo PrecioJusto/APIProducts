@@ -37,16 +37,19 @@ public class ProductServiceImp implements ProductService {
     @Autowired
     private ContainerService containerService;
 
+    @Transactional
     @Override
     public Optional<Product> findById(final Long id) {
         return this.productRepository.findById(id);
     }
 
+    @Transactional
     @Override
     public List<Product> findAll() {
         return this.productRepository.findAll();
     }
 
+    @Transactional
     @Override
     public Optional<FoodProduct> findProductByProdid(final Long id) {
         return this.foodProductRepository.findProductByProdid(id);
@@ -91,6 +94,7 @@ public class ProductServiceImp implements ProductService {
         }
     }
 
+    @Transactional
     @Override
     public Boolean delete(final Long id) {
         try {
@@ -102,6 +106,7 @@ public class ProductServiceImp implements ProductService {
         }
     }
 
+    @Transactional
     @Override
     public List<Product> getAllFromIds(final List<Long> productsId) {
         final List<Product> products = new ArrayList<>();
@@ -109,16 +114,19 @@ public class ProductServiceImp implements ProductService {
         return products;
     }
 
+    @Transactional
     @Override
     public List<Product> findAllByProdnameContaining(final String name) {
         return this.productRepository.findAllByProdnameContaining(name);
     }
 
+    @Transactional
     @Override
     public List<Product> findAllByCategory_Catename(final String name) {
         return this.productRepository.findAllByCategory_Catename(name);
     }
 
+    @Transactional
     @Override
     public Product findProductByIdAndUpdateViews(final Long id) {
         final Product product = this.findById(id)
@@ -127,6 +135,7 @@ public class ProductServiceImp implements ProductService {
         return this.productRepository.save(product);
     }
 
+    @Transactional
     @Override
     public Optional<Product> findProductByBrand_BrannameAndProdnameOrderByProdname(final String branname, final String prodname) {
         return this.productRepository.findProductByBrand_BrannameAndProdnameOrderByProdname(branname, prodname);

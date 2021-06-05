@@ -25,15 +25,15 @@ public class Category {
     private byte[] cateimg;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Product> products;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "cateparent", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "cateparent", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private Set<Category> catechildrens;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cateparent", nullable = true)
     private Category cateparent;
 }

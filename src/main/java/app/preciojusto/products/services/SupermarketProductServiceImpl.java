@@ -30,11 +30,13 @@ public class SupermarketProductServiceImpl implements SupermarketProductService 
     @Autowired
     private OfferService offerService;
 
+    @Transactional
     @Override
     public Optional<SupermarketProduct> findById(SupermarketProductCK id) {
         return this.supermarketProductRepository.findById(id);
     }
 
+    @Transactional
     @Override
     public List<SupermarketProduct> findAll() {
         return this.supermarketProductRepository.findAll();
@@ -91,11 +93,13 @@ public class SupermarketProductServiceImpl implements SupermarketProductService 
         }
     }
 
+    @Transactional
     @Override
     public SupermarketProduct save(SupermarketProduct supermarketProduct) {
         return this.supermarketProductRepository.save(supermarketProduct);
     }
 
+    @Transactional
     @Override
     public Boolean delete(Long productId, Long supermarketId) {
         try {

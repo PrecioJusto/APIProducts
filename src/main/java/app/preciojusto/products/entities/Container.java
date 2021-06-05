@@ -24,6 +24,6 @@ public class Container {
     private Double contcapacity;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "container", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "container", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<FoodProduct> foodProducts;
 }

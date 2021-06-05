@@ -16,7 +16,7 @@ public class SupermarketController {
     @Autowired
     private SupermarketService supermarketService;
 
-    @GetMapping("/supermarket")
+    @GetMapping("/supermarkets")
     public List<Supermarket> getSupermarkets() {
         return this.supermarketService.findAll();
     }

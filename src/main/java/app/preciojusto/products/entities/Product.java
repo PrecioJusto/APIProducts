@@ -34,10 +34,10 @@ public class Product {
     @JoinColumn(name = "cateid", nullable = false)
     private Category category;
 
-    @OneToMany(mappedBy = "prodid", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "prodid", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private Set<SupermarketProduct> supermarketProducts;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "packid", referencedColumnName = "packid")
     private Pack pack;
 

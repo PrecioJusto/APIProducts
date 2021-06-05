@@ -16,7 +16,7 @@ public class PackController {
     @Autowired
     private PackService packService;
 
-    @GetMapping("/pack")
+    @GetMapping("/packs")
     public List<Pack> getPacks() {
         return this.packService.findAll();
     }

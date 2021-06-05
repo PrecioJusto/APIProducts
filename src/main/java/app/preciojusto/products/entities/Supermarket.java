@@ -19,8 +19,10 @@ public class Supermarket {
     @Column(unique = true)
     private String supename;
 
+    private String supeimg;
+
     @JsonIgnore
-    @OneToMany(mappedBy = "supeid", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "supeid", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<SupermarketProduct> supermarketProducts;
 
 }

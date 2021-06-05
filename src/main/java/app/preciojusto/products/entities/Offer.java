@@ -19,6 +19,6 @@ public class Offer {
     private Long offeid;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "offer", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "offer", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<SupermarketProduct> supermarketProducts;
 }

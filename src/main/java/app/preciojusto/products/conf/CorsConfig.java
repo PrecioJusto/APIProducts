@@ -20,14 +20,11 @@ public class CorsConfig implements WebMvcConfigurer {
 
         //All application
         registry.addMapping("/**")
-                .allowedOrigins(environment.getProperty("cors.allowed"))
-                //.allowedOrigins("http://domain.com:","http://domain2.com", "http://domain3.com")
+                .allowedOrigins(this.environment.getProperty("cors.allowed"))
                 .allowedMethods("PUT", "POST", "GET", "DELETE", "OPTIONS");
 
         //Extractor product
         registry.addMapping("/extractor/product")
-                .allowedOrigins(environment.getProperty("cors.allowed"))
-                //.allowedOrigins("http://domain.com:","http://domain2.com", "http://domain3.com")
                 .allowedMethods("POST", "OPTIONS");
     }
 }

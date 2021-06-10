@@ -6,6 +6,7 @@ import app.preciojusto.products.exceptions.ApplicationExceptionCode;
 import app.preciojusto.products.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -42,13 +43,11 @@ public class FoodProductExtractorImpl implements FoodProductExtractorService {
     @Autowired
     private RecipeService recipeService;
 
-
+    @Transactional
     @Override
     public Boolean checkGlobalExtract(ExtractorFoodproductDTO productRequest) {
 
         try {
-
-
             //Comprobamos si el producto existe ya en la base de datos
             Optional<Product> productExists = this.productService.findProductByBrand_BrannameAndProdnameOrderByProdname(productRequest.getBrand(), productRequest.getName());
 
@@ -284,6 +283,7 @@ public class FoodProductExtractorImpl implements FoodProductExtractorService {
                 supermarketProductDTO.setProductid(foodProduct.getProdid());
                 supermarketProductDTO.setSuperid(supermarket.getSupeid());
                 supermarketProductDTO.setImg(supeprod.getImg());
+                supermarketProductDTO.setPrice(supeprod.getPrice());
                 if (offer != null) {
                     supermarketProductDTO.setOfferid(offer.getOffeid());
                 }

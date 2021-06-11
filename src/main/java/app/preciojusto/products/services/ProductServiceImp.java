@@ -9,6 +9,7 @@ import app.preciojusto.products.exceptions.ResourceNotFoundException;
 import app.preciojusto.products.repositories.FoodProductRepository;
 import app.preciojusto.products.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +37,8 @@ public class ProductServiceImp implements ProductService {
 
     @Autowired
     private ContainerService containerService;
+
+    private final int PAGE_SIZE = 24;
 
     @Transactional
     @Override
@@ -139,6 +142,16 @@ public class ProductServiceImp implements ProductService {
     @Override
     public Optional<Product> findProductByBrand_BrannameAndProdnameOrderByProdname(final String branname, final String prodname) {
         return this.productRepository.findProductByBrand_BrannameAndProdnameOrderByProdname(branname, prodname);
+    }
+
+    @Override
+    public List<Product> findAllByProdcreatedtimeIsNotNullOrderByProdviewsDesc(final int page) {
+        return this.productRepository.findAllByProdcreatedtimeIsNotNullOrderByProdviewsDesc(PageRequest.of(page, this.PAGE_SIZE));
+    }
+
+    @Override
+    public List<Product> findAllProductWithOffer(final int page) {
+        return this.productRepository.findAllProductWithOffer(PageRequest.of(page, this.PAGE_SIZE));
     }
 
 }

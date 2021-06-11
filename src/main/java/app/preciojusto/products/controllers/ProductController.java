@@ -22,6 +22,16 @@ public class ProductController {
         return this.productService.findAll();
     }
 
+    @GetMapping("/products/page/{page}")
+    public List<Product> getProductsPage(@PathVariable int page) {
+        return this.productService.findAllByProdcreatedtimeIsNotNullOrderByProdviewsDesc(page);
+    }
+
+    @GetMapping("/products/page/offer/{page}")
+    public List<Product> getProductsPageOffer(@PathVariable int page) {
+        return this.productService.findAllProductWithOffer(page);
+    }
+
     @PostMapping("/products/idslist")
     public List<Product> getAllProductFromList(@RequestBody List<Long> products) throws ResourceNotFoundException {
         return this.productService.getAllFromIds(products);

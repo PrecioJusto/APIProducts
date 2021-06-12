@@ -1,5 +1,6 @@
 package app.preciojusto.products.services;
 
+import app.preciojusto.products.DTOs.CategoryImageDTO;
 import app.preciojusto.products.entities.Category;
 import app.preciojusto.products.exceptions.ApplicationExceptionCode;
 import app.preciojusto.products.exceptions.ResourceAlreadyExistsException;
@@ -56,6 +57,14 @@ public class CategoryServiceImpl implements CategoryService {
         } catch (Exception e) {
             throw new ResourceAlreadyExistsException(ApplicationExceptionCode.CATEGORY_ALREADY_EXISTS_ERROR);
         }
+    }
+
+    @Override
+    public Category saveImg(CategoryImageDTO request) {
+        Category c = this.findById(request.getCateid())
+                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CATEGORY_NOT_FOUND_ERROR));
+        c.setCateimg(request.getCateImgUrl());
+        return this.save(c);
     }
 
     @Override

@@ -18,7 +18,7 @@ public class Supermarket {
 
     @Column(unique = true)
     private String supename;
-
+    
     private String supeimg;
 
     @JsonIgnore

@@ -1,5 +1,6 @@
 package app.preciojusto.products.services;
 
+import app.preciojusto.products.DTOs.SupermarketImageDTO;
 import app.preciojusto.products.entities.Supermarket;
 import app.preciojusto.products.exceptions.ResourceNotFoundException;
 
@@ -16,4 +17,6 @@ public interface SupermarketService {
     Optional<Supermarket> findBySupenameEquals(String name);
 
     Boolean delete(Long id) throws ResourceNotFoundException;
+
+    Supermarket saveImg(SupermarketImageDTO request);
 }

@@ -1,5 +1,6 @@
 package app.preciojusto.products.services;
 
+import app.preciojusto.products.DTOs.CategoryImageDTO;
 import app.preciojusto.products.entities.Category;
 import app.preciojusto.products.exceptions.ResourceNotFoundException;
 
@@ -19,4 +20,6 @@ public interface CategoryService {
     Optional<Category> findByCatenameEquals(String name) throws ResourceNotFoundException;
 
     Boolean delete(Long id) throws ResourceNotFoundException;
+
+    Category saveImg(CategoryImageDTO request);
 }

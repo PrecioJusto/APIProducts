@@ -1,5 +1,6 @@
 package app.preciojusto.products.controllers;
 
+import app.preciojusto.products.DTOs.SupermarketImageDTO;
 import app.preciojusto.products.entities.Supermarket;
 import app.preciojusto.products.exceptions.ApplicationExceptionCode;
 import app.preciojusto.products.exceptions.BadRequestException;
@@ -32,6 +33,13 @@ public class SupermarketController {
         if (request.getSupename() == null || request.getSupeid() != null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.supermarketService.save(request);
+    }
+
+    @PutMapping("/supermarket/img")
+    public Supermarket postAddSupermarketImage(@RequestBody SupermarketImageDTO request) throws ResourceNotFoundException {
+        if (request.getSupeid() == null || request.getSupeImgUrl() == null)
+            throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
+        return this.supermarketService.saveImg(request);
     }
 
     @PutMapping("/supermarket")

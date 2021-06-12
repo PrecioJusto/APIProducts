@@ -1,5 +1,6 @@
 package app.preciojusto.products.services;
 
+import app.preciojusto.products.DTOs.CategoryImageDTO;
 import app.preciojusto.products.entities.Category;
 import app.preciojusto.products.exceptions.ApplicationExceptionCode;
 import app.preciojusto.products.exceptions.ResourceAlreadyExistsException;
@@ -8,6 +9,7 @@ import app.preciojusto.products.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,6 +58,14 @@ public class CategoryServiceImpl implements CategoryService {
         } catch (Exception e) {
             throw new ResourceAlreadyExistsException(ApplicationExceptionCode.CATEGORY_ALREADY_EXISTS_ERROR);
         }
+    }
+
+    @Override
+    public Category saveImg(CategoryImageDTO request) {
+        Category c = this.findById(request.getCateid())
+                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CATEGORY_NOT_FOUND_ERROR));
+        c.setCateimg(Base64.getDecoder().decode(request.getImgBase64()));
+        return this.save(c);
     }
 
     @Override

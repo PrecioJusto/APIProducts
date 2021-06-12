@@ -1,5 +1,6 @@
 package app.preciojusto.products.services;
 
+import app.preciojusto.products.DTOs.SupermarketImageDTO;
 import app.preciojusto.products.entities.Supermarket;
 import app.preciojusto.products.exceptions.ApplicationExceptionCode;
 import app.preciojusto.products.exceptions.ResourceAlreadyExistsException;
@@ -8,6 +9,7 @@ import app.preciojusto.products.repositories.SupermarketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +42,14 @@ public class SupermarketServiceImpl implements SupermarketService {
         } catch (Exception e) {
             throw new ResourceAlreadyExistsException(ApplicationExceptionCode.SUPERMARKET_ALREADY_EXISTS_ERROR);
         }
+    }
+
+    @Override
+    public Supermarket saveImg(SupermarketImageDTO request) {
+        Supermarket s = this.findById(request.getSupeid())
+                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.SUPERMARKET_NOT_FOUND_ERROR));
+        s.setSupeimg(Base64.getDecoder().decode(request.getImgBase64()));
+        return this.save(s);
     }
 
     @Override

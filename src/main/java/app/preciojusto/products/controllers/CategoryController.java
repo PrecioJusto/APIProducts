@@ -1,5 +1,6 @@
 package app.preciojusto.products.controllers;
 
+import app.preciojusto.products.DTOs.CategoryImageDTO;
 import app.preciojusto.products.entities.Category;
 import app.preciojusto.products.exceptions.ApplicationExceptionCode;
 import app.preciojusto.products.exceptions.BadRequestException;
@@ -34,6 +35,13 @@ public class CategoryController {
         if (request.getCatename() == null || request.getCateid() != null || request.getCateimg() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.categoryService.save(request);
+    }
+
+    @PutMapping("/category/img")
+    public Category postAddCategory(@RequestBody CategoryImageDTO request) throws Exception {
+        if (request.getCateid() == null || request.getImgBase64() == null)
+            throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
+        return this.categoryService.saveImg(request);
     }
 
     @PutMapping("/category")

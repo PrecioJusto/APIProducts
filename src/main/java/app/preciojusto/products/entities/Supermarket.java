@@ -18,10 +18,8 @@ public class Supermarket {
 
     @Column(unique = true)
     private String supename;
-
-    @Lob
-    @Column(name = "cateimg", columnDefinition = "BLOB")
-    private byte[] supeimg;
+    
+    private String supeimg;
 
     @JsonIgnore
     @OneToMany(mappedBy = "supeid", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)

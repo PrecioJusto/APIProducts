@@ -9,5 +9,5 @@ public class SupermarketImageDTO {
 
     private Long supeid;
 
-    private String imgBase64;
+    private String supeImgUrl;
 }

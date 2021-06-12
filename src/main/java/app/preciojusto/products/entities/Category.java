@@ -20,9 +20,7 @@ public class Category {
     @Column(unique = true)
     private String catename;
 
-    @Lob
-    @Column(name = "cateimg", columnDefinition = "BLOB")
-    private byte[] cateimg;
+    private String cateimg;
 
     @JsonIgnore
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)

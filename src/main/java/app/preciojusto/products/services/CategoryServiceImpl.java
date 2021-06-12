@@ -9,7 +9,6 @@ import app.preciojusto.products.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,7 +63,7 @@ public class CategoryServiceImpl implements CategoryService {
     public Category saveImg(CategoryImageDTO request) {
         Category c = this.findById(request.getCateid())
                 .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CATEGORY_NOT_FOUND_ERROR));
-        c.setCateimg(Base64.getDecoder().decode(request.getImgBase64()));
+        c.setCateimg(request.getCateImgUrl());
         return this.save(c);
     }
 

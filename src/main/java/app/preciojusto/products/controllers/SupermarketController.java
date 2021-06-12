@@ -37,7 +37,7 @@ public class SupermarketController {
 
     @PutMapping("/supermarket/img")
     public Supermarket postAddSupermarketImage(@RequestBody SupermarketImageDTO request) throws ResourceNotFoundException {
-        if (request.getSupeid() == null || request.getImgBase64() == null)
+        if (request.getSupeid() == null || request.getSupeImgUrl() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.supermarketService.saveImg(request);
     }

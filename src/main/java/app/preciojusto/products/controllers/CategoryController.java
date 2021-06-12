@@ -39,7 +39,7 @@ public class CategoryController {
 
     @PutMapping("/category/img")
     public Category postAddCategory(@RequestBody CategoryImageDTO request) throws Exception {
-        if (request.getCateid() == null || request.getImgBase64() == null)
+        if (request.getCateid() == null || request.getCateImgUrl() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.categoryService.saveImg(request);
     }

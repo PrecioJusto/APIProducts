@@ -8,6 +8,6 @@ import lombok.Setter;
 public class CategoryImageDTO {
     private Long cateid;
 
-    private String imgBase64;
+    private String cateImgUrl;
 
 }

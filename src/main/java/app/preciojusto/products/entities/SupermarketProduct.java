@@ -26,7 +26,7 @@ public class SupermarketProduct {
     @JsonIgnore
     @MapsId("prodid")
     @JoinColumn(name = "prodid")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Product prodid;
 
     @ManyToOne(optional = true, fetch = FetchType.EAGER)

@@ -41,8 +41,6 @@ public class ProductServiceImp implements ProductService {
     @Autowired
     private ContainerService containerService;
 
-    private final int PAGE_SIZE = 24;
-
     @Transactional
     @Override
     public Optional<Product> findById(final Long id) {
@@ -149,7 +147,8 @@ public class ProductServiceImp implements ProductService {
 
     @Override
     public List<Product> findAllByProdcreatedtimeIsNotNullOrderByProdviewsDesc(final int page) {
-        return this.productRepository.findAllByProdcreatedtimeIsNotNullOrderByProdviewsDesc(PageRequest.of(page, this.PAGE_SIZE));
+        int PAGE_SIZE = 24;
+        return this.productRepository.findAllByProdcreatedtimeIsNotNullOrderByProdviewsDesc(PageRequest.of(page, PAGE_SIZE));
     }
 
     @Override
@@ -162,17 +161,14 @@ public class ProductServiceImp implements ProductService {
             int random_int = (int) Math.floor(Math.random() * (totalOfferSize - 1 + 1) + 1);
             Optional<Offer> offerToAdd = this.offerService.findOfferById((long) random_int);
             offerToAdd.ifPresent(offersRandoms::add);
-
             if (offersRandoms.size() == totalOfferSize) break;
         }
 
         Set<Product> products = new HashSet<>();
         for (Offer offer : offersRandoms) {
-            SupermarketProduct sp = offer.getSupermarketProducts().stream().findFirst().get();
-            System.out.println(sp.getProdid().getProdid());
-            products.add(sp.getProdid());
+            Optional<SupermarketProduct> sp = offer.getSupermarketProducts().stream().findFirst();
+            sp.ifPresent(supermarketProduct -> products.add(supermarketProduct.getProdid()));
         }
-
         return new ArrayList<>(products);
     }
 

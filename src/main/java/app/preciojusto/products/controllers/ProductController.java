@@ -27,9 +27,9 @@ public class ProductController {
         return this.productService.findAllByProdcreatedtimeIsNotNullOrderByProdviewsDesc(page);
     }
 
-    @GetMapping("/products/page/offer/{page}")
-    public List<Product> getProductsPageOffer(@PathVariable int page) {
-        return this.productService.findAllProductWithOffer(page);
+    @GetMapping("/products/offer")
+    public List<Product> getProductsPageOffer() {
+        return this.productService.findAllProductWithOffer();
     }
 
     @PostMapping("/products/idslist")

@@ -32,5 +32,5 @@ public interface ProductService {
 
     List<Product> findAllByProdcreatedtimeIsNotNullOrderByProdviewsDesc(int page);
 
-    List<Product> findAllProductWithOffer(int page);
+    List<Product> findAllProductWithOffer();
 }

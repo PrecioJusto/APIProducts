@@ -2,7 +2,9 @@ package app.preciojusto.products.services;
 
 import app.preciojusto.products.DTOs.FoodproductDTO;
 import app.preciojusto.products.entities.FoodProduct;
+import app.preciojusto.products.entities.Offer;
 import app.preciojusto.products.entities.Product;
+import app.preciojusto.products.entities.SupermarketProduct;
 import app.preciojusto.products.exceptions.ApplicationExceptionCode;
 import app.preciojusto.products.exceptions.ResourceAlreadyExistsException;
 import app.preciojusto.products.exceptions.ResourceNotFoundException;
@@ -13,9 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ProductServiceImp implements ProductService {
@@ -34,6 +34,9 @@ public class ProductServiceImp implements ProductService {
 
     @Autowired
     private PackService packService;
+
+    @Autowired
+    private OfferService offerService;
 
     @Autowired
     private ContainerService containerService;
@@ -150,8 +153,24 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public List<Product> findAllProductWithOffer(final int page) {
-        return this.productRepository.findAllProductWithOffer(PageRequest.of(page, this.PAGE_SIZE));
+    public List<Product> findAllProductWithOffer() {
+        Set<Offer> offersRandoms = new HashSet<>();
+        int totalOfferSize = this.offerService.findAll().size();
+
+        while (offersRandoms.size() < 61) {
+            int random_int = (int) Math.floor(Math.random() * (totalOfferSize - 1 + 1) + 1);
+            Optional<Offer> offerToAdd = this.offerService.findOfferById((long) random_int);
+            offerToAdd.ifPresent(offersRandoms::add);
+        }
+
+        Set<Product> products = new HashSet<>();
+        for (Offer offer : offersRandoms) {
+            SupermarketProduct sp = offer.getSupermarketProducts().stream().findFirst().get();
+            System.out.println(sp.getProdid().getProdid());
+            products.add(sp.getProdid());
+        }
+
+        return new ArrayList<>(products);
     }
 
 }

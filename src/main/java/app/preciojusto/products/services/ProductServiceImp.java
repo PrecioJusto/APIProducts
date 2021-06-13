@@ -158,9 +158,12 @@ public class ProductServiceImp implements ProductService {
         int totalOfferSize = this.offerService.findAll().size();
 
         while (offersRandoms.size() < 61) {
+            System.out.println(offersRandoms.size());
             int random_int = (int) Math.floor(Math.random() * (totalOfferSize - 1 + 1) + 1);
             Optional<Offer> offerToAdd = this.offerService.findOfferById((long) random_int);
             offerToAdd.ifPresent(offersRandoms::add);
+
+            if (offersRandoms.size() == totalOfferSize) break;
         }
 
         Set<Product> products = new HashSet<>();

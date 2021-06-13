@@ -31,7 +31,7 @@ public class Category {
     private Set<Category> catechildrens;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cateparent", nullable = true)
     private Category cateparent;
 }

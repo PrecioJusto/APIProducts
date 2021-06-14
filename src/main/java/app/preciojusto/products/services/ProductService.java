@@ -22,9 +22,9 @@ public interface ProductService {
 
     List<Product> getAllFromIds(List<Long> productsId);
 
-    List<Product> findAllByProdnameContaining(String name);
+    List<Product> findAllByProdnameContaining(String name, int page);
 
-    List<Product> findAllByCategory_Catename(String name);
+    List<Product> findAllByCategory_Catename(String name, int page);
 
     Product findProductByIdAndUpdateViews(Long id);
 

@@ -41,9 +41,11 @@ public class ProductServiceImp implements ProductService {
     @Autowired
     private ContainerService containerService;
 
+    private final int PAGE_SIZE = 1;
+
     @Transactional
     @Override
-    public Optional<Product> findById(final Long id) {
+    public Optional<Product> findById(Long id) {
         return this.productRepository.findById(id);
     }
 
@@ -55,18 +57,17 @@ public class ProductServiceImp implements ProductService {
 
     @Transactional
     @Override
-    public Optional<FoodProduct> findProductByProdid(final Long id) {
+    public Optional<FoodProduct> findProductByProdid(Long id) {
         return this.foodProductRepository.findProductByProdid(id);
     }
 
     @Transactional
     @Override
-    public Product saveFoodproductDTO(final FoodproductDTO request) throws ResourceNotFoundException {
-        final FoodProduct foodProduct;
-        if (request.getId() != null) {
-            foodProduct = this.foodProductRepository.findProductByProdid(request.getId())
-                    .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.FOODPRODUCT_NOT_FOUND_ERROR));
-        } else {
+    public Product saveFoodproductDTO(FoodproductDTO request) throws ResourceNotFoundException {
+        FoodProduct foodProduct;
+        if (request.getId() != null) foodProduct = this.foodProductRepository.findProductByProdid(request.getId())
+                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.FOODPRODUCT_NOT_FOUND_ERROR));
+        else {
             foodProduct = new FoodProduct();
             foodProduct.setProdviews(0L);
         }
@@ -77,63 +78,61 @@ public class ProductServiceImp implements ProductService {
         foodProduct.setBrand(this.brandService.findByBrannameEquals(request.getBrandName())
                 .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.BRAND_NOT_FOUND_ERROR)));
 
-        if (request.getPackQuant() != null) {
+        if (request.getPackQuant() != null)
             foodProduct.setPack(this.packService.findByPackquantity(request.getPackQuant())
                     .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.PACK_NOT_FOUND_ERROR)));
-        } else {
+        else
             foodProduct.setPack(null);
-        }
 
-        if (request.getContainerId() != null) {
+        if (request.getContainerId() != null)
             foodProduct.setContainer(this.containerService.findById(request.getContainerId())
                     .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CONTAINER_NOT_FOUND_ERROR)));
-        } else {
+        else
             foodProduct.setContainer(null);
-        }
 
         try {
             return this.productRepository.save(foodProduct);
-        } catch (final Exception e) {
+        } catch (Exception e) {
             throw new ResourceAlreadyExistsException(ApplicationExceptionCode.FOODPRODUCT_ALREADY_EXISTS_ERROR);
         }
     }
 
     @Transactional
     @Override
-    public Boolean delete(final Long id) {
+    public Boolean delete(Long id) {
         try {
             this.productRepository.delete(this.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.PRODUCT_NOT_FOUND_ERROR)));
             return true;
-        } catch (final Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
 
     @Transactional
     @Override
-    public List<Product> getAllFromIds(final List<Long> productsId) {
-        final List<Product> products = new ArrayList<>();
+    public List<Product> getAllFromIds(List<Long> productsId) {
+        List<Product> products = new ArrayList<>();
         productsId.forEach((id) -> this.findById(id).ifPresentOrElse(products::add, () -> products.add(null)));
         return products;
     }
 
     @Transactional
     @Override
-    public List<Product> findAllByProdnameContaining(final String name) {
-        return this.productRepository.findAllByProdnameContaining(name);
+    public List<Product> findAllByProdnameContaining(String name, int page) {
+        return this.productRepository.findAllByProdnameContaining(name, PageRequest.of(page, this.PAGE_SIZE));
     }
 
     @Transactional
     @Override
-    public List<Product> findAllByCategory_Catename(final String name) {
-        return this.productRepository.findAllByCategory_Catename(name);
+    public List<Product> findAllByCategory_Catename(String name, int page) {
+        return this.productRepository.findAllByCategory_Catename(name, PageRequest.of(page, this.PAGE_SIZE));
     }
 
     @Transactional
     @Override
-    public Product findProductByIdAndUpdateViews(final Long id) {
-        final Product product = this.findById(id)
+    public Product findProductByIdAndUpdateViews(Long id) {
+        Product product = this.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.PRODUCT_NOT_FOUND_ERROR));
         product.setProdviews(product.getProdviews() + 1);
         return this.productRepository.save(product);
@@ -141,14 +140,13 @@ public class ProductServiceImp implements ProductService {
 
     @Transactional
     @Override
-    public Optional<Product> findProductByBrand_BrannameAndProdnameOrderByProdname(final String branname, final String prodname) {
+    public Optional<Product> findProductByBrand_BrannameAndProdnameOrderByProdname(String branname, String prodname) {
         return this.productRepository.findProductByBrand_BrannameAndProdnameOrderByProdname(branname, prodname);
     }
 
     @Override
-    public List<Product> findAllByProdcreatedtimeIsNotNullOrderByProdviewsDesc(final int page) {
-        int PAGE_SIZE = 24;
-        return this.productRepository.findAllByProdcreatedtimeIsNotNullOrderByProdviewsDesc(PageRequest.of(page, PAGE_SIZE));
+    public List<Product> findAllByProdcreatedtimeIsNotNullOrderByProdviewsDesc(int page) {
+        return this.productRepository.findAllByProdcreatedtimeIsNotNullOrderByProdviewsDesc(PageRequest.of(page, this.PAGE_SIZE));
     }
 
     @Override

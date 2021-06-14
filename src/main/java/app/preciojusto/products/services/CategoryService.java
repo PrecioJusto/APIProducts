@@ -22,4 +22,6 @@ public interface CategoryService {
     Boolean delete(Long id) throws ResourceNotFoundException;
 
     Category saveImg(CategoryImageDTO request);
+
+    List<Category> findAllPageable(int page);
 }

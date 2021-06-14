@@ -17,13 +17,16 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @ResponseBody
     @GetMapping("/categories")
     public List<Category> getCategories() {
         return this.categoryService.findAll();
     }
 
-    @ResponseBody
+    @GetMapping("/categories/{page}")
+    public List<Category> getCategoriesPageable(@PathVariable int page) {
+        return this.categoryService.findAllPageable(page);
+    }
+
     @GetMapping("/category/{id}")
     public Category getCategory(@PathVariable Long id) throws ResourceNotFoundException {
         return this.categoryService.findById(id)

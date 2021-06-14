@@ -7,6 +7,7 @@ import app.preciojusto.products.exceptions.ResourceAlreadyExistsException;
 import app.preciojusto.products.exceptions.ResourceNotFoundException;
 import app.preciojusto.products.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -65,6 +66,11 @@ public class CategoryServiceImpl implements CategoryService {
                 .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CATEGORY_NOT_FOUND_ERROR));
         c.setCateimg(request.getCateImgUrl());
         return this.save(c);
+    }
+
+    @Override
+    public List<Category> findAllPageable(int page) {
+        return this.categoryRepository.findAllByCatenameIsNotNull(PageRequest.of(page, 20));
     }
 
     @Override

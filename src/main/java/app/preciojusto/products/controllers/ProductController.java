@@ -27,6 +27,11 @@ public class ProductController {
         return this.productService.findAllByProdcreatedtimeIsNotNullOrderByProdviewsDesc(page);
     }
 
+    @GetMapping("/products/top")
+    public List<Product> getTopProducts() {
+        return this.productService.findTopProducts();
+    }
+
     @GetMapping("/products/offer")
     public List<Product> getProductsPageOffer() {
         return this.productService.findAllProductWithOffer();

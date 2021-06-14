@@ -45,7 +45,7 @@ public class ProductServiceImp implements ProductService {
 
     @Transactional
     @Override
-    public Optional<Product> findById(final Long id) {
+    public Optional<Product> findById(Long id) {
         return this.productRepository.findById(id);
     }
 
@@ -57,7 +57,7 @@ public class ProductServiceImp implements ProductService {
 
     @Transactional
     @Override
-    public Optional<FoodProduct> findProductByProdid(final Long id) {
+    public Optional<FoodProduct> findProductByProdid(Long id) {
         return this.foodProductRepository.findProductByProdid(id);
     }
 
@@ -92,27 +92,27 @@ public class ProductServiceImp implements ProductService {
 
         try {
             return this.productRepository.save(foodProduct);
-        } catch (final Exception e) {
+        } catch (Exception e) {
             throw new ResourceAlreadyExistsException(ApplicationExceptionCode.FOODPRODUCT_ALREADY_EXISTS_ERROR);
         }
     }
 
     @Transactional
     @Override
-    public Boolean delete(final Long id) {
+    public Boolean delete(Long id) {
         try {
             this.productRepository.delete(this.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.PRODUCT_NOT_FOUND_ERROR)));
             return true;
-        } catch (final Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
 
     @Transactional
     @Override
-    public List<Product> getAllFromIds(final List<Long> productsId) {
-        final List<Product> products = new ArrayList<>();
+    public List<Product> getAllFromIds(List<Long> productsId) {
+        List<Product> products = new ArrayList<>();
         productsId.forEach((id) -> this.findById(id).ifPresentOrElse(products::add, () -> products.add(null)));
         return products;
     }
@@ -124,20 +124,26 @@ public class ProductServiceImp implements ProductService {
 
     @Transactional
     @Override
-    public List<Product> findAllByProdnameContaining(final String name, final int page) {
+    public List<Product> findAllByProdnameContaining(String name, int page) {
         return this.productRepository.findAllByProdnameContaining(name, PageRequest.of(page, this.PAGE_SIZE));
     }
 
     @Transactional
     @Override
-    public List<Product> findAllByCategory_Catename(String name, int page) {
+    public List<Product> findAllByCategory_CatenamePaged(String name, int page) {
         return this.productRepository.findAllByCategory_Catename(name, PageRequest.of(page, this.PAGE_SIZE));
     }
 
     @Transactional
     @Override
-    public Product findProductByIdAndUpdateViews(final Long id) {
-        final Product product = this.findById(id)
+    public List<Product> findAllByCategory_Catename(String name) {
+        return this.productRepository.findAllByCategory_Catename(name);
+    }
+
+    @Transactional
+    @Override
+    public Product findProductByIdAndUpdateViews(Long id) {
+        Product product = this.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.PRODUCT_NOT_FOUND_ERROR));
         product.setProdviews(product.getProdviews() + 1);
         return this.productRepository.save(product);
@@ -145,12 +151,12 @@ public class ProductServiceImp implements ProductService {
 
     @Transactional
     @Override
-    public Optional<Product> findProductByBrand_BrannameAndProdnameOrderByProdname(final String branname, final String prodname) {
+    public Optional<Product> findProductByBrand_BrannameAndProdnameOrderByProdname(String branname, String prodname) {
         return this.productRepository.findProductByBrand_BrannameAndProdnameOrderByProdname(branname, prodname);
     }
 
     @Override
-    public List<Product> findAllByProdcreatedtimeIsNotNullOrderByProdviewsDesc(final int page) {
+    public List<Product> findAllByProdcreatedtimeIsNotNullOrderByProdviewsDesc(int page) {
         return this.productRepository.findAllByProdcreatedtimeIsNotNullOrderByProdviewsDesc(PageRequest.of(page, this.PAGE_SIZE));
     }
 
@@ -166,9 +172,9 @@ public class ProductServiceImp implements ProductService {
             if (offersRandoms.size() == totalOfferSize) break;
         }
 
-        final Set<Product> products = new HashSet<>();
-        for (final Offer offer : offersRandoms) {
-            final Optional<SupermarketProduct> sp = offer.getSupermarketProducts().stream().findFirst();
+        Set<Product> products = new HashSet<>();
+        for (Offer offer : offersRandoms) {
+            Optional<SupermarketProduct> sp = offer.getSupermarketProducts().stream().findFirst();
             sp.ifPresent(supermarketProduct -> products.add(supermarketProduct.getProdid()));
         }
         return new ArrayList<>(products);

@@ -63,11 +63,12 @@ public class ProductServiceImp implements ProductService {
 
     @Transactional
     @Override
-    public Product saveFoodproductDTO(FoodproductDTO request) throws ResourceNotFoundException {
-        FoodProduct foodProduct;
-        if (request.getId() != null) foodProduct = this.foodProductRepository.findProductByProdid(request.getId())
-                .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.FOODPRODUCT_NOT_FOUND_ERROR));
-        else {
+    public Product saveFoodproductDTO(final FoodproductDTO request) throws ResourceNotFoundException {
+        final FoodProduct foodProduct;
+        if (request.getId() != null) {
+            foodProduct = this.foodProductRepository.findProductByProdid(request.getId())
+                    .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.FOODPRODUCT_NOT_FOUND_ERROR));
+        } else {
             foodProduct = new FoodProduct();
             foodProduct.setProdviews(0L);
         }
@@ -78,17 +79,19 @@ public class ProductServiceImp implements ProductService {
         foodProduct.setBrand(this.brandService.findByBrannameEquals(request.getBrandName())
                 .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.BRAND_NOT_FOUND_ERROR)));
 
-        if (request.getPackQuant() != null)
+        if (request.getPackQuant() != null) {
             foodProduct.setPack(this.packService.findByPackquantity(request.getPackQuant())
                     .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.PACK_NOT_FOUND_ERROR)));
-        else
+        } else {
             foodProduct.setPack(null);
+        }
 
-        if (request.getContainerId() != null)
+        if (request.getContainerId() != null) {
             foodProduct.setContainer(this.containerService.findById(request.getContainerId())
                     .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CONTAINER_NOT_FOUND_ERROR)));
-        else
+        } else {
             foodProduct.setContainer(null);
+        }
 
         try {
             return this.productRepository.save(foodProduct);
@@ -124,14 +127,26 @@ public class ProductServiceImp implements ProductService {
 
     @Transactional
     @Override
-    public List<Product> findAllByProdnameContaining(final String name, final int page) {
+    public List<Product> findAllByProdnameContainingPage(final String name, final int page) {
         return this.productRepository.findAllByProdnameContaining(name, PageRequest.of(page, this.PAGE_SIZE));
     }
 
     @Transactional
     @Override
-    public List<Product> findAllByCategory_Catename(String name, int page) {
+    public List<Product> findAllByProdnameContaining(final String name) {
+        return this.productRepository.findAllByProdnameContaining(name);
+    }
+
+    @Transactional
+    @Override
+    public List<Product> findAllByCategory_CatenamePaged(final String name, final int page) {
         return this.productRepository.findAllByCategory_Catename(name, PageRequest.of(page, this.PAGE_SIZE));
+    }
+
+    @Transactional
+    @Override
+    public List<Product> findAllByCategory_Catename(final String name) {
+        return this.productRepository.findAllByCategory_Catename(name);
     }
 
     @Transactional
@@ -156,14 +171,16 @@ public class ProductServiceImp implements ProductService {
 
     @Override
     public List<Product> findAllProductWithOffer() {
-        Set<Offer> offersRandoms = new HashSet<>();
-        int totalOfferSize = this.offerService.findAll().size();
+        final Set<Offer> offersRandoms = new HashSet<>();
+        final int totalOfferSize = this.offerService.findAll().size();
 
         while (offersRandoms.size() < 61) {
-            int random_int = (int) Math.floor(Math.random() * (totalOfferSize - 1 + 1) + 1);
-            Optional<Offer> offerToAdd = this.offerService.findOfferById((long) random_int);
+            final int random_int = (int) Math.floor(Math.random() * (totalOfferSize - 1 + 1) + 1);
+            final Optional<Offer> offerToAdd = this.offerService.findOfferById((long) random_int);
             offerToAdd.ifPresent(offersRandoms::add);
-            if (offersRandoms.size() == totalOfferSize) break;
+            if (offersRandoms.size() == totalOfferSize) {
+                break;
+            }
         }
 
         final Set<Product> products = new HashSet<>();

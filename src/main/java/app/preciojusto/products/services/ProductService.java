@@ -24,9 +24,13 @@ public interface ProductService {
 
     List<Product> findTopProducts();
 
-    List<Product> findAllByProdnameContaining(String name, int page);
+    List<Product> findAllByProdnameContainingPage(String name, int page);
+    
+    List<Product> findAllByProdnameContaining(String name);
 
-    List<Product> findAllByCategory_Catename(String name, int page);
+    List<Product> findAllByCategory_CatenamePaged(String name, int page);
+
+    List<Product> findAllByCategory_Catename(String name);
 
     Product findProductByIdAndUpdateViews(Long id);
 

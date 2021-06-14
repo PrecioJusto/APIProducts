@@ -44,12 +44,22 @@ public class ProductController {
 
     @GetMapping("/products/name/{name}/{page}")
     public List<Product> getAllProductFromName(@PathVariable String name, @PathVariable int page) throws ResourceNotFoundException {
-        return this.productService.findAllByProdnameContaining(name, page);
+        return this.productService.findAllByProdnameContainingPage(name, page);
+    }
+
+    @GetMapping("/products/name/{name}")
+    public List<Product> getAllProductFromName(@PathVariable String name) throws ResourceNotFoundException {
+        return this.productService.findAllByProdnameContaining(name);
     }
 
     @GetMapping("/products/catename/{catename}/{page}")
-    public List<Product> getAllProductFromCatename(@PathVariable String catename, @PathVariable int page) throws ResourceNotFoundException {
-        return this.productService.findAllByCategory_Catename(catename, page);
+    public List<Product> getAllProductFromCatenamePaged(@PathVariable String catename, @PathVariable int page) throws ResourceNotFoundException {
+        return this.productService.findAllByCategory_CatenamePaged(catename, page);
+    }
+
+    @GetMapping("/products/catename/{catename}")
+    public List<Product> getAllProductFromCatename(@PathVariable String catename) throws ResourceNotFoundException {
+        return this.productService.findAllByCategory_Catename(catename);
     }
 
     @GetMapping("/product/{id}")

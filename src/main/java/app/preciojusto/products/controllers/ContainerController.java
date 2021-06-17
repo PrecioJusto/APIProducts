@@ -16,39 +16,39 @@ public class ContainerController {
     @Autowired
     ContainerService containerService;
 
-    @GetMapping("/containers")
+    @GetMapping("/api/containers")
     public List<Container> getContainer() {
         return this.containerService.findAll();
     }
 
-    @GetMapping("/container/{id}")
+    @GetMapping("/api/container/{id}")
     public Container getContainer(@PathVariable Long id) throws ResourceNotFoundException {
         return this.containerService.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CONTAINER_NOT_FOUND_ERROR));
     }
 
-    @GetMapping("/container/byattr")
+    @GetMapping("/api/container/byattr")
     public Container getContainerByAttr(@RequestBody Container request) throws ResourceNotFoundException {
         return this.containerService.findContainerByContcapacityAndAndConttypeAndContunit(request.getContcapacity(),
                 request.getConttype(), request.getContunit())
                 .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CONTAINER_NOT_FOUND_ERROR));
     }
 
-    @PostMapping("/container")
+    @PostMapping("/api/container")
     public Container postAddContainer(@RequestBody Container request) throws ResourceNotFoundException {
         if (request.getContid() != null || request.getConttype() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.containerService.save(request);
     }
 
-    @PutMapping("/container")
+    @PutMapping("/api/container")
     public Container putUpdateContainer(@RequestBody Container request) throws ResourceNotFoundException {
         if (request.getContid() == null || request.getConttype() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.containerService.save(request);
     }
 
-    @DeleteMapping("/container/{id}")
+    @DeleteMapping("/api/container/{id}")
     public Boolean deleteContainer(@PathVariable Long id) throws ResourceNotFoundException {
         return this.containerService.delete(id);
     }

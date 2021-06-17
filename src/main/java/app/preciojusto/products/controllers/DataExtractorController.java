@@ -18,7 +18,7 @@ public class DataExtractorController {
 
     private final List<ExtractorFoodproductDTO> failedProducts = new LinkedList<>();
 
-    @PostMapping("/extractor/product")
+    @PostMapping("/api/extractor/product")
     public List<ExtractorFoodproductDTO> extractProductsFoodProducts(@RequestBody List<ExtractorFoodproductDTO> request) {
         for (ExtractorFoodproductDTO productRequest : request) {
             boolean statusProduct = this.foodProductExtractorService.checkGlobalExtract(productRequest);

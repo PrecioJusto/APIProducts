@@ -12,20 +12,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsConfig implements WebMvcConfigurer {
 
-    @Autowired
-    private Environment environment;
-
     @Override
     public void addCorsMappings(CorsRegistry registry) {
 
         //All application
         registry.addMapping("/**")
-                .allowCredentials(true)
-                .allowedOrigins("http://localhost:8080/", "http://localhost:8080", "https://preciojusto.app")
+                .allowedOrigins("https://localhost:8080", "https://preciojusto.app")
                 .allowedMethods("PUT", "POST", "GET", "DELETE", "OPTIONS");
 
         //Extractor product
-        registry.addMapping("/extractor/product")
+        registry.addMapping("/api/extractor/product")
                 .allowedMethods("POST", "OPTIONS");
     }
 }

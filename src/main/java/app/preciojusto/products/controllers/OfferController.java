@@ -16,88 +16,88 @@ public class OfferController {
     @Autowired
     private OfferService offerService;
 
-    @GetMapping("/offers")
+    @GetMapping("/api/offers")
     public List<Offer> getOffers() {
         return this.offerService.findAll();
     }
 
-    @GetMapping("/offer/{id}")
+    @GetMapping("/api/offer/{id}")
     public Offer getOffer(@PathVariable Long id) throws ResourceNotFoundException {
         return this.offerService.findOfferById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.OFFER_NOT_FOUND_ERROR));
     }
 
-    @PostMapping("/offerpercentage")
+    @PostMapping("/api/offerpercentage")
     public Offer postAddOfferPercentage(@RequestBody OfferPercentage request) {
         if (request.getOffeid() != null || request.getOfpepercentage() == null || request.getOfpepreviousprice() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.offerService.saveOfferPercentage(request);
     }
 
-    @PostMapping("/offerunit")
+    @PostMapping("/api/offerunit")
     public Offer postAddOfferUnit(@RequestBody OfferUnit request) {
         if (request.getOffeid() != null || request.getOfunfirst() == null || request.getOfunsecond() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.offerService.saveOfferUnit(request);
     }
 
-    @PostMapping("/offerunitpercentage")
+    @PostMapping("/api/offerunitpercentage")
     public Offer postAddOfferUnitPercentage(@RequestBody OfferUnitPercentage request) {
         if (request.getOffeid() != null || request.getOfuppercentage() == null || request.getOfupunitaffected() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.offerService.saveOfferUnitPercentage(request);
     }
 
-    @PostMapping("/offerunknown")
+    @PostMapping("/api/offerunknown")
     public Offer postAddOfferUnknown(@RequestBody OfferUnknown request) {
         if (request.getOffeid() != null || request.getOfunname() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.offerService.saveOfferUnknown(request);
     }
 
-    @PostMapping("/offerunitplainprice")
+    @PostMapping("/api/offerunitplainprice")
     public Offer postAddOfferUnitPlainPrice(@RequestBody OfferUnitPlainPrice request) {
         if (request.getOffeid() != null || request.getOfupprice() == null || request.getOfupunits() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.offerService.saveOfferUnitPlainPrice(request);
     }
 
-    @PutMapping("/offerpercentage")
+    @PutMapping("/api/offerpercentage")
     public Offer putUpdateOfferPercentage(@RequestBody OfferPercentage request) {
         if (request.getOffeid() == null || request.getOfpepercentage() == null || request.getOfpepreviousprice() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.offerService.saveOfferPercentage(request);
     }
 
-    @PutMapping("/offerunit")
+    @PutMapping("/api/offerunit")
     public Offer putUpdateOfferUnit(@RequestBody OfferUnit request) {
         if (request.getOffeid() == null || request.getOfunfirst() == null || request.getOfunsecond() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.offerService.saveOfferUnit(request);
     }
 
-    @PutMapping("/offerunitpercentage")
+    @PutMapping("/api/offerunitpercentage")
     public Offer putUpdateOfferUnitPercentage(@RequestBody OfferUnitPercentage request) {
         if (request.getOffeid() == null || request.getOfuppercentage() == null || request.getOfupunitaffected() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.offerService.saveOfferUnitPercentage(request);
     }
 
-    @PutMapping("/offerunknown")
+    @PutMapping("/api/offerunknown")
     public Offer putAddOfferUnknown(@RequestBody OfferUnknown request) {
         if (request.getOffeid() == null || request.getOfunname() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.offerService.saveOfferUnknown(request);
     }
 
-    @PutMapping("/offerunitplainprice")
+    @PutMapping("/api/offerunitplainprice")
     public Offer putAddOfferUnitPlainPrice(@RequestBody OfferUnitPlainPrice request) {
         if (request.getOffeid() == null || request.getOfupprice() == null || request.getOfupunits() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.offerService.saveOfferUnitPlainPrice(request);
     }
 
-    @DeleteMapping("/offer/{id}")
+    @DeleteMapping("/api/offer/{id}")
     public Boolean deleteOffer(@PathVariable Long id) {
         return this.offerService.delete(id);
     }

@@ -17,44 +17,44 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("/categories")
+    @GetMapping("/api/categories")
     public List<Category> getCategories() {
         return this.categoryService.findAll();
     }
 
-    @GetMapping("/categories/{page}")
+    @GetMapping("/api/categories/{page}")
     public List<Category> getCategoriesPageable(@PathVariable int page) {
         return this.categoryService.findAllPageable(page);
     }
 
-    @GetMapping("/category/{id}")
+    @GetMapping("/api/category/{id}")
     public Category getCategory(@PathVariable Long id) throws ResourceNotFoundException {
         return this.categoryService.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.CATEGORY_NOT_FOUND_ERROR));
     }
 
-    @PostMapping("/category")
+    @PostMapping("/api/category")
     public Category postAddCategory(@RequestBody Category request) throws Exception {
         if (request.getCatename() == null || request.getCateid() != null || request.getCateimg() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.categoryService.save(request);
     }
 
-    @PutMapping("/category/img")
+    @PutMapping("/api/category/img")
     public Category postAddCategory(@RequestBody CategoryImageDTO request) throws Exception {
         if (request.getCateid() == null || request.getCateImgUrl() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.categoryService.saveImg(request);
     }
 
-    @PutMapping("/category")
+    @PutMapping("/api/category")
     public Category putUpdateCategory(@RequestBody Category request) throws Exception {
         if (request.getCatename() == null || request.getCateid() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.categoryService.save(request);
     }
 
-    @DeleteMapping("/category/{id}")
+    @DeleteMapping("/api/category/{id}")
     public Boolean deleteCategory(@PathVariable Long id) throws ResourceNotFoundException {
         return this.categoryService.delete(id);
     }

@@ -19,34 +19,34 @@ public class SupermarketProductController {
     private SupermarketProductService supermarketProductService;
 
 
-    @GetMapping("/supermarketproducts")
+    @GetMapping("/api/supermarketproducts")
     public List<SupermarketProduct> getSupermarketproducts() {
         return this.supermarketProductService.findAll();
     }
 
 
-    @GetMapping("/supermarketproduct/{productId}/{supermarketId}")
+    @GetMapping("/api/supermarketproduct/{productId}/{supermarketId}")
     public SupermarketProduct getSupermarketproduct(@PathVariable Long productId, @PathVariable Long supermarketId) throws ResourceNotFoundException {
         SupermarketProductCK supermarketProductCK = new SupermarketProductCK(productId, supermarketId);
         return this.supermarketProductService.findById(supermarketProductCK)
                 .orElseThrow(() -> new ResourceNotFoundException(ApplicationExceptionCode.SUPERMARKETPRODUCT_NOT_FOUND_ERROR));
     }
 
-    @PostMapping("/supermarketproduct")
+    @PostMapping("/api/supermarketproduct")
     public SupermarketProduct postAddSupermarketproduct(@RequestBody SupermarketProductDTO request) throws ResourceNotFoundException {
         if (request.getSuperid() == null || request.getProductid() == null || request.getPrice() == null || request.getImg() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.supermarketProductService.add(request);
     }
 
-    @PutMapping("/supermarketproduct")
+    @PutMapping("/api/supermarketproduct")
     public SupermarketProduct putUpdateSupermarketproduct(@RequestBody SupermarketProductDTO request) throws ResourceNotFoundException {
         if (request.getSuperid() == null || request.getProductid() == null || request.getPrice() == null || request.getImg() == null)
             throw new BadRequestException(ApplicationExceptionCode.BADREQUEST_ERROR);
         return this.supermarketProductService.update(request);
     }
 
-    @DeleteMapping("/supermarketproduct/{productId}/{supermarketId}")
+    @DeleteMapping("/api/supermarketproduct/{productId}/{supermarketId}")
     public Boolean deleteSupermarketproduct(@PathVariable Long productId, @PathVariable Long supermarketId) throws ResourceNotFoundException {
         return this.supermarketProductService.delete(productId, supermarketId);
     }
